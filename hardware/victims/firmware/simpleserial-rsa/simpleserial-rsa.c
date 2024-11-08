@@ -28,6 +28,7 @@
 
 void rsa_init(void);
 uint8_t real_dec(uint8_t * pt, uint8_t len);
+uint8_t my_real_dec(uint8_t * pt, uint8_t len);
 uint8_t get_pt(uint8_t * pt, uint8_t len);
 
 #if defined(__arm__) || defined(__riscv__) || defined(__riscv)
@@ -47,12 +48,21 @@ int main(void)
 
     simpleserial_init();
     simpleserial_addcmd('t', 0,  real_dec);
+
+    //echte entschlüsselung- verschlüsselte nachricht muss übergeben werden
+    // anzahl an erwarteten bytes wird angebeben, max 64
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1 evtl #bytes abändern
+    simpleserial_addcmd('h', 64, my_real_dec);
+
+
+    
     #if (SS_VER != SS_VER_2_1) && (defined(__arm__) || defined(__riscv__) || defined(__riscv))
     simpleserial_addcmd('1', 0,  sig_chunk_1);
     simpleserial_addcmd('2', 0,  sig_chunk_2);
     #endif
 
     //Perform encryption -  must set key via plaintext
+    //simpleserial_addcmd('p', 64, get_pt);
     simpleserial_addcmd('p', 16, get_pt);
     //simpleserial_addcmd('k', 16, set_key);
     while(1)
