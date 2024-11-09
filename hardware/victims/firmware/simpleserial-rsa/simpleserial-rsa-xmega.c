@@ -208,6 +208,98 @@ const uint8_t encrypted_x[] PROGMEM = {
 };
 
 
+/**********************************************************************************************
+   RSA KEY #2 (2Bytes)
+**********************************************************************************************/
+/* Primzahl 1 p (2 Bytes): 62549 */
+const uint8_t p2[] PROGMEM = {
+0xf4, 0x55
+};
+
+/* Primzahl 2 q (2 Bytes): 61543*/
+const uint8_t q2[] PROGMEM = {
+0xf0, 0x67
+};
+
+/* Exponent 1 dp: 11321*/
+const uint8_t dp2[] PROGMEM = {
+0x2c, 0x39
+};
+
+/* Exponent 2 dq:647 */
+const uint8_t dq2[] PROGMEM = {
+0x02, 0x87
+};
+
+/* qinv:34632 */
+const uint8_t qinv2[] PROGMEM = {
+0x87, 0x48
+};
+
+/* modulus n: 3849453107 */
+const uint8_t modulus2[] PROGMEM = {
+0xe5, 0x71, 0xfe, 0x33
+};
+
+/* pub exponent e: 65537 */
+const uint8_t pub_exponent2[] PROGMEM = {
+0x01, 0x00, 0x01
+};
+
+/* priv exponent d: 1128127049*/
+const uint8_t priv_exponent2[] PROGMEM = {
+0x43, 0x3d, 0xda, 0x49
+};
+
+
+
+
+/**********************************************************************************************
+   RSA KEY #3 (32 Bytes)
+**********************************************************************************************/
+/* Primzahl 1 p 56842597621398436557813564258526951265526554589515564527115452658451565454963*/
+const uint8_t p3[] PROGMEM = {
+0x7d, 0xab, 0xc5, 0x27, 0x2e, 0xf4, 0x22, 0x6f, 0x8c, 0x8c, 0x07, 0x71, 0xdc, 0x78, 0x49, 0x2c, 0xa1, 0x5b, 0x43, 0x4c, 0x66, 0x08, 0xe0, 0xef, 0x9c, 0xa6, 0xee, 0x86, 0xcb, 0x6f, 0x26, 0x73
+};
+
+/* Primzahl 2 q 56842597621398436557813564258526951265526554589515564527115452658451565454621*/
+const uint8_t q3[] PROGMEM = {
+0x7d, 0xab, 0xc5, 0x27, 0x2e, 0xf4, 0x22, 0x6f, 0x8c, 0x8c, 0x07, 0x71, 0xdc, 0x78, 0x49, 0x2c, 0xa1, 0x5b, 0x43, 0x4c, 0x66, 0x08, 0xe0, 0xef, 0x9c, 0xa6, 0xee, 0x86, 0xcb, 0x6f, 0x25, 0x1d
+};
+
+/* Exponent 1 dp: 42226251814971434209944815538190405761053455455552821444414846768645413494283 */
+const uint8_t dp3[] PROGMEM = {
+0x5d, 0x5b, 0x36, 0x29, 0x86, 0x92, 0xeb, 0xe5, 0xec, 0x05, 0xb6, 0x1e, 0x1a, 0x86, 0xec, 0xed, 0x0f, 0xad, 0x09, 0x50, 0x7e, 0xd8, 0x07, 0xa9, 0x58, 0xb9, 0x15, 0xa6, 0xe3, 0x07, 0x5e, 0x0b
+};
+
+/* Exponent 2 dq: 47798018101494521266834730193984493603489676013146974160013511154837836956813*/
+const uint8_t dq3[] PROGMEM = {
+0x69, 0xac, 0xb8, 0x33, 0x53, 0xcb, 0x5c, 0xed, 0x9a, 0x2c, 0xe1, 0xd1, 0xc0, 0x07, 0xb1, 0xd8, 0x82, 0xb2, 0xa0, 0x6b, 0xac, 0xdd, 0x48, 0x70, 0x94, 0xb4, 0xd6, 0x9c, 0xa8, 0x92, 0x84, 0x8d
+};
+
+/* qinv: 21773041778956711079162505607798335133871282605925552494304457012447821855556*/
+const uint8_t qinv3[] PROGMEM = {
+0x30, 0x23, 0x1a, 0xdc, 0xdb, 0x57, 0x86, 0x74, 0x15, 0xa5, 0xea, 0xe5, 0xff, 0xdd, 0x3b, 0x77, 0xa5, 0x1a, 0xb9, 0x37, 0x76, 0x6d, 0xb1, 0x7b, 0x38, 0x42, 0xef, 0x93, 0x71, 0xda, 0x7b, 0x44
+};
+
+/* modulus n: 3231080904348211197507744225057151739674198701955287013863366120571536075433289354791858611634080222605797512592173476389538288555005341834233505795734023 */
+const uint8_t modulus3[] PROGMEM = {
+0x3d, 0xb1, 0x31, 0xc9, 0x3e, 0x08, 0x78, 0x0a, 0x04, 0x45, 0x53, 0xd5, 0x39, 0x51, 0x91, 0xb5, 0x21, 0x51, 0x53, 0x35, 0x7b, 0xca, 0xe3, 0xda, 0xf6, 0xaa, 0x43, 0x1a, 0xac, 0xb7, 0x48, 0xad, 0x21, 0x62, 0xdb, 0x75, 0x6f, 0x96, 0x72, 0x12, 0xc9, 0x72, 0x4e, 0x93, 0xc6, 0x62, 0xac, 0xbb, 0xb7, 0x77, 0x8b, 0x0e, 0x95, 0x24, 0xbe, 0xdd, 0x03, 0xa4, 0xe3, 0x8c, 0xf9, 0x02, 0xfa, 0x07
+};
+
+/* pub exponent e: 65537 */
+const uint8_t pub_exponent3[] PROGMEM = {
+0x01, 0x00, 0x01
+};
+
+/* priv exponent d: 1852656640120803216197659528040612906808017437814910285898920794037523576645679163100258313427339175867757832623394158750466761913917189472921068937222833*/
+const uint8_t priv_exponent3[] PROGMEM = {
+0x23, 0x5f, 0x98, 0xd6, 0x75, 0x55, 0x51, 0xcf, 0x1c, 0x87, 0xcb, 0xfb, 0xf4, 0xf3, 0xca, 0x82, 0x7b, 0x6a, 0x30, 0x35, 0xf8, 0x97, 0x6b, 0x73, 0x40, 0x00, 0x7c, 0x9d, 0xac, 0xef, 0x23, 0x22, 0x62, 0x66, 0x16, 0xd0, 0x3a, 0x19, 0x0f, 0x1e, 0x16, 0x3e, 0x89, 0x4a, 0x1f, 0x4b, 0x8f, 0xc9, 0x68, 0x7c, 0xcc, 0x5b, 0xe5, 0x41, 0x98, 0x02, 0xc5, 0xa4, 0x84, 0xbb, 0x41, 0xc1, 0x1a, 0xb1
+};
+
+
+
+
 uint8_t keys_allocated = 0;
 rsa_publickey_t pub_key;
 rsa_privatekey_t priv_key;
@@ -245,6 +337,23 @@ uint8_t load_bigint_from_os(bigint_t* a, PGM_VOID_P os, uint16_t length_B){
 	return 0;
 }
 
+/* converts data to bigint_t datatpye for my_real_dec*/
+uint8_t my_load_bigint(bigint_t* a, uint8_t* src, uint16_t length_B){
+	a->length_B = BIGINT_CEIL(length_B) / sizeof(bigint_word_t);
+	a->wordv = malloc(BIGINT_CEIL(length_B));
+	if(!a->wordv){
+        putch('F');
+        while(1);
+		return 1;
+	}
+	memset(a->wordv, 0, sizeof(bigint_word_t));
+	memcpy((uint8_t*)a->wordv + BIGINT_OFF(length_B), src, length_B); // !!!!
+	a->info = 0;
+	bigint_changeendianess(a);
+	bigint_adjust(a);
+	return 0;
+}
+
 uint8_t pre_alloc_key_crt(void){
 	priv_key.n = 5;
 	priv_key.components = malloc(5 * sizeof(bigint_t));
@@ -257,7 +366,7 @@ uint8_t pre_alloc_key_crt(void){
 
 void load_key(uint8_t use_fake)
 {
-    if (use_fake){
+    if (use_fake == 1){
         /* This "Fake" data loads part of a different private key. You could also set a few bytes
            of the private key to 0 for example, although you need to ensure you don't put invalid
            data. Play around with the real_dec() version first. */
@@ -270,6 +379,32 @@ void load_key(uint8_t use_fake)
         load_bigint_from_os(&(priv_key.components[2]), dp_1, sizeof(DP));
         load_bigint_from_os(&(priv_key.components[3]), DQ, sizeof(DQ));
         load_bigint_from_os(&(priv_key.components[4]), QINV, sizeof(QINV));
+
+    } else if (use_fake == 2){
+         /*data mit 2 Bytes Primzahlen*/
+        load_bigint_from_os(&pub_key.modulus, modulus2, sizeof(modulus2));
+        memcpy(&priv_key.modulus, &pub_key.modulus, sizeof(bigint_t));
+        load_bigint_from_os(&pub_key.exponent, pub_exponent2, sizeof(pub_exponent2));
+        priv_key.n = 5;
+        load_bigint_from_os(&(priv_key.components[0]), p2, sizeof(p2));
+        load_bigint_from_os(&(priv_key.components[1]), q2, sizeof(q2));
+        load_bigint_from_os(&(priv_key.components[2]), dp2, sizeof(dp2));
+        load_bigint_from_os(&(priv_key.components[3]), dq2, sizeof(dq2));
+        load_bigint_from_os(&(priv_key.components[4]), qinv2, sizeof(qinv2));
+
+    } else if (use_fake == 3){
+         /*data mit 32 Bytes Primzahlen*/
+        load_bigint_from_os(&pub_key.modulus, modulus3, sizeof(modulus3));
+        memcpy(&priv_key.modulus, &pub_key.modulus, sizeof(bigint_t));
+        load_bigint_from_os(&pub_key.exponent, pub_exponent3, sizeof(pub_exponent3));
+        priv_key.n = 5;
+        load_bigint_from_os(&(priv_key.components[0]), p3, sizeof(p3));
+        load_bigint_from_os(&(priv_key.components[1]), q3, sizeof(q3));
+        load_bigint_from_os(&(priv_key.components[2]), dp3, sizeof(dp3));
+        load_bigint_from_os(&(priv_key.components[3]), dq3, sizeof(dq3));
+        load_bigint_from_os(&(priv_key.components[4]), qinv3, sizeof(qinv3));
+        
+        
     } else {
         /* This is the "real" pub/priv data */
         load_bigint_from_os(&pub_key.modulus, MODULUS, sizeof(MODULUS));
@@ -303,6 +438,31 @@ uint8_t real_dec(uint8_t * pt, uint8_t len)
     return 0;
 }
 
+
+
+/*abwandlug von real_dec. Unterschied: die verschlüsselte nachricht wird übergeben
+    convert pt to bigint datatpye, 
+    do encrpytion
+*/
+uint8_t my_real_dec(uint8_t * pt, uint8_t len)
+{
+    /* Encrypted message in pt, */
+    //memcpy(&cp, pt, len); //kopiert den len zeichen im buffer, auf den pt zeigt, nach cp 
+                            //mit rsa_dec(&cp, &priv_key))
+
+    my_load_bigint(&cp, pt, len); //sizoof(&pt) oder len
+
+    
+    //Do an encryption on constant data
+    if (rsa_dec(&cp, &priv_key)){        //oder rsa_dec(pt, &priv_key)
+        putch('F');
+    }
+    return 0;
+}
+
+
+
+
 /* Performs PART of a RSA decryption using only 16 bytes of keying material, where the "key" is
    actually the 16-byte input plaintext (sent with 'p' command). This is used to give you an easier
    target to perform SPA on rather than the full (very slow) RSA algorithm. */
@@ -311,7 +471,7 @@ uint8_t get_pt(uint8_t * pt, uint8_t len)
 	uint8_t flag = 0;
 
     const bigint_t* r = &(priv_key.components[0]);
-    const bigint_t* a = ENCRYPTED;
+    const bigint_t* a = (bigint_t*) ENCRYPTED;
 
 
     bigint_t res, base;
@@ -333,7 +493,7 @@ uint8_t get_pt(uint8_t * pt, uint8_t len)
 	for(i = 0; i < 16; i++) {
 
 		//t = exp->wordv[i - 1];
-        t = pt[i];
+        t = pt[i];  //!!!!!!!!!!!!!!!!!!
 
 		for(j=8; j > 0; --j){
 			if(!flag){
@@ -361,7 +521,8 @@ uint8_t get_pt(uint8_t * pt, uint8_t len)
 void rsa_init(void)
 {
     pre_alloc_key_crt();
-    load_key(0);
-}
+    //load_key(2);       // use 2 Byte prim data
+    load_key(3);          // use 32 Byte prim data
+}    
 
 #endif

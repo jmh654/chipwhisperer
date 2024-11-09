@@ -24,11 +24,21 @@
 #include "bigint_io.h"
 #include "rsa_basic.h"
 
-#define DEBUG 0
+// für trigger high/low
+#include "hal.h"
+#include "simpleserial.h"
 
-#if DEBUG
+#define DEBUG 1
+
+//#if DEBUG
 #include "cli.h"
-#endif
+// new!!!!!!!
+#include "hal.h"
+cli_rx_fpt cli_rx = (cli_rx_fpt)getch;
+cli_tx_fpt cli_tx = (cli_tx_fpt)putch;
+uint8_t cli_echo = 0;
+// new!!!!!!!!!!
+//#endif
 
 void rsa_enc(bigint_t* data, const rsa_publickey_t* key){
 /*
@@ -51,6 +61,10 @@ m = m2 + q * h
 */
 
 uint8_t rsa_dec_crt_mono(bigint_t* data, const rsa_privatekey_t* key){
+
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    //trigger_high();
+    
 	bigint_t m1, m2;
 	m1.wordv = malloc((key->components[0].length_B /* + 1 */) * sizeof(bigint_word_t));
 	m2.wordv = malloc((key->components[1].length_B /* + 1 */) * sizeof(bigint_word_t));
@@ -98,15 +112,26 @@ uint8_t rsa_dec_crt_mono(bigint_t* data, const rsa_privatekey_t* key){
 #if DEBUG
 	bigint_print_hex(&m1);
 #endif
+
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    trigger_high();
+    
 	while(BIGINT_NEG_MASK & m1.info){
+    //while( (m1 - m1 ) < 0) {     //!!!!!!!!!!!!!!!!test oder if statt while
 #if DEBUG
 	cli_putstr_P(PSTR("\r\nDBG: adding "));
-	bigint_print_hex(key->components[0]);
+	bigint_print_hex(&(key->components[0]));  //!!!!!!!!!!!!
 	cli_putstr_P(PSTR("\r\nDBG: to "));
 	bigint_print_hex(&m1);
 #endif
 		bigint_add_s(&m1, &m1, &(key->components[0]));
 	}
+    
+    //trigger_high();
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    //trigger_low();
+
+    
 #if DEBUG
 	cli_putstr_P(PSTR("\r\nDBG: reduce-mul ..."));
 	cli_putstr_P(PSTR("\r\nreduce("));
@@ -157,10 +182,17 @@ uint8_t rsa_dec_crt_mono(bigint_t* data, const rsa_privatekey_t* key){
 #endif
 	free(m2.wordv);
 	free(m1.wordv);
+
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    trigger_low();
 	return 0;
 }
 
 uint8_t rsa_dec(bigint_t* data, const rsa_privatekey_t* key){
+#if DEBUG
+    cli_putstr_P(PSTR("\r\ndata:"));
+	bigint_print_hex(data);
+#endif
 	if(key->n == 1){
 		bigint_expmod_u(data, data, &(key->components[0]), &key->modulus);
 		return 0;

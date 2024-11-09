@@ -844,17 +844,23 @@ void bigint_expmod_u(bigint_t* dest, const bigint_t* a, const bigint_t* exp, con
 		bigint_copy(dest, &res);
 		return;
 	}
-#if PRINT_STATUS
-    putch('+');
-#endif
+//#if PRINT_STATUS
+//    putch('+');
+//#endif
 	uint8_t flag = 0;
 	t=exp->wordv[exp->length_B - 1];
-	for(i=exp->length_B; i > 0; --i){
-		t = exp->wordv[i - 1];
+	for(i=exp->length_B; i > 0; --i){   //hier # bits ändern
+    //for (i= 4; i>0; --i){ //new!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        //uint8_t i = 0;//new
+        //if (i==4) {
+         //   break;//new
+        //}
+        
+        t = exp->wordv[i - 1];
 		for(j=BIGINT_WORD_SIZE; j > 0; --j){
-#if PRINT_STATUS
-            putch('.');
-#endif
+//#if PRINT_STATUS
+//           putch('.');
+//#endif
 			if(!flag){
 				if(t & (1<<(BIGINT_WORD_SIZE-1))){
 					flag = 1;
@@ -871,17 +877,18 @@ void bigint_expmod_u(bigint_t* dest, const bigint_t* a, const bigint_t* exp, con
 				}
 			}
 			t<<=1;
+            //i++; //new!!!!!!!!!!!1
 		}
 	}
 
-#if PRINT_STATUS
-    putch('\n');
-#endif
+//#if PRINT_STATUS
+//    putch('\n');
+//#endif
 //	cli_putc('+');
 	SET_POS(&res);
 	bigint_copy(dest, &res);
 }
-
+// PRINT STATUS wird ausgegben -> auskommentieren für non debug
 /******************************************************************************/
 
 #define cli_putstr(a)

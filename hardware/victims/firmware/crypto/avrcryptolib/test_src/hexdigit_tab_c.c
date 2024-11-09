@@ -24,20 +24,20 @@
 #include <avr/pgmspace.h>
 #include "hexdigit_tab.h"
 
-char hexdigit_tab_P[] PROGMEM = 
+const char hexdigit_tab_P[] PROGMEM = 
                               {'0','1','2','3',
                                '4','5','6','7',
                                '8','9','A','B',
                                'C','D','E','F'};
 
-char hexdigit_tab_uc_P[] PROGMEM = 
+const char hexdigit_tab_uc_P[] PROGMEM = 
                               {'0','1','2','3',
                                '4','5','6','7',
                                '8','9','A','B',
                                'C','D','E','F'};
 
 
-char hexdigit_tab_lc_P[] PROGMEM = 
+const char hexdigit_tab_lc_P[] PROGMEM = 
                               {'0','1','2','3',
                                '4','5','6','7',
                                '8','9','a','b',

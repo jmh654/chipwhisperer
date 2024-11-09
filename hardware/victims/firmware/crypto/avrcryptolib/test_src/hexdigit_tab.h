@@ -23,7 +23,7 @@
 #ifndef HEXDIGIT_TAB_H_
 #define HEXDIGIT_TAB_H_
 
-extern char hexdigit_tab_P[];
-extern char hexdigit_tab_uc_P[]; 
-extern char hexdigit_tab_lc_P[];
+extern const char hexdigit_tab_P[];
+extern const char hexdigit_tab_uc_P[]; 
+extern const char hexdigit_tab_lc_P[];
 #endif /*HEXDIGIT_TAB_H_*/

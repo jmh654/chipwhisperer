@@ -31,11 +31,16 @@ else ifeq ($(CRYPTO_OPTIONS), DES)
  VPATH += :$(FIRMWAREPATH)/crypto/$(CRYPTO_LIB)/des
  EXTRAINCDIRS += $(FIRMWAREPATH)/crypto/$(CRYPTO_LIB)/des
 
+
 else ifeq ($(CRYPTO_OPTIONS), RSA)
  SRC += rsa_basic.c bigint.c
  CDEFS += -DAVRCRYPTOLIB -DPRINT_STATUS=1
  VPATH += :$(FIRMWAREPATH)/crypto/$(CRYPTO_LIB)/rsa:$(FIRMWAREPATH)/crypto/$(CRYPTO_LIB)/bigint
  EXTRAINCDIRS += $(FIRMWAREPATH)/crypto/$(CRYPTO_LIB)/rsa $(FIRMWAREPATH)/crypto/$(CRYPTO_LIB)/bigint
+ EXTRAINCDIRS += $(FIRMWAREPATH)/crypto/$(CRYPTO_LIB)/test_src
+ VPATH += :$(FIRMWAREPATH)/crypto/$(CRYPTO_LIB)/test_src
+ SRC += bigint_io.c hexdigit_tab_c.c  
+ ASRC += cli-basics.S cli-hexdump.S 
 
 else ifeq ($(CRYPTO_OPTIONS), SHA)
  SRC += sha1.c
