@@ -322,7 +322,8 @@ const uint8_t dq4[] PROGMEM = {
 
 /* qinv: 907488296688955759*/
 const uint8_t qinv4[] PROGMEM = {
-0xc98, 0x0b, 0xcc, 0x39, 0xf8, 0x31, 0x6f
+0x0c, 0x98, 0x0b, 0xcc, 0x39, 0xf8, 0x31, 0x6f
+
 };
 
 /* modulus n:89525655797379415138998373505682772229 */
@@ -339,6 +340,54 @@ const uint8_t pub_exponent4[] PROGMEM = {
 const uint8_t priv_exponent4[] PROGMEM = {
 0x3b, 0x06, 0xbc, 0x7c, 0xc8, 0x7c, 0xdb, 0x45, 0xcd, 0xc8, 0x5c, 0x5a, 0x8f, 0xb5, 0xb6, 0xd1
 };
+
+
+/**********************************************************************************************
+   RSA KEY #5 (16Bytes)
+**********************************************************************************************/
+/* Primzahl 1 p (16 Bytes): 267882443680857975761967467408531606417 */
+const uint8_t p5[] PROGMEM = {
+0xc9, 0x88, 0x48, 0x30, 0x3d, 0x06, 0x09, 0xbd, 0x39, 0x0b, 0xfe, 0xeb, 0xe5, 0xef, 0x4b, 0x91
+};
+
+/* Primzahl 2 q (16 Bytes):195126513202591094461357355156264195281 */
+const uint8_t q5[] PROGMEM = {
+0x92, 0xcb, 0xff, 0xdd, 0x66, 0xdf, 0xbe, 0x4f, 0xc1, 0xb2, 0x67, 0xf7, 0x38, 0x9c, 0x14, 0xd1
+};
+
+/* Exponent 1 dp: 256641820519554293363545041368684467889*/
+const uint8_t dp5[] PROGMEM = {
+0xc1, 0x13, 0x6a, 0xad, 0xa4, 0x59, 0x1b, 0x8d, 0x88, 0x90, 0xe0, 0x8a, 0x9a, 0x40, 0x96, 0xb1
+};
+
+/* Exponent 2 dq: 185161326518899860606250116989915167073*/
+const uint8_t dq5[] PROGMEM = {
+0x8b, 0x4c, 0xc6, 0x3a, 0x64, 0xda, 0xc1, 0x0f, 0x92, 0x31, 0x27, 0xf3, 0x33, 0x66, 0xf9, 0x61
+};
+
+/* qinv: 152353370281789692140390938043637092096*/
+const uint8_t qinv5[] PROGMEM = {
+0x72, 0x9e, 0x31, 0x19, 0x80, 0xe1, 0x0a, 0x45, 0xae, 0x39, 0xbb, 0x48, 0x04, 0x5c, 0xcf, 0x00
+};
+
+/* modulus n: 52270967183635299110959169812507925945033892524340745668343932985606720718177  */
+const uint8_t modulus5[] PROGMEM = {
+0x73, 0x90, 0x51, 0xa9, 0xcc, 0x98, 0xa4, 0x11, 0x5e, 0xf2, 0xcd, 0x6b, 0x14, 0xc6, 0x7e, 0x25, 0x7d, 0xcd,
+0x81, 0x31, 0xbd, 0x3a, 0x36, 0x3b, 0x71, 0xdd, 0x42, 0xce, 0x2e, 0xa0, 0x05, 0x61
+};
+
+/* pub exponent e: 65537 */
+const uint8_t pub_exponent5[] PROGMEM = {
+0x01, 0x00, 0x01
+};
+
+/* priv exponent d: 29085331343906929714197293827192677959330857546950047073312239160804581777153 */
+const uint8_t priv_exponent5[] PROGMEM = {
+0x40, 0x4d, 0xb6, 0xd3, 0x27, 0xf0, 0x6b, 0xa2, 0xea, 0xd5, 0x6a, 0x2e, 0x42, 0x72, 0x2c, 0xb0, 0x88, 0x1b, 
+0xbf, 0x0a, 0xf2, 0x39, 0x43, 0xd2, 0x01, 0x20, 0x9f, 0xb8, 0x8d, 0xcb, 0x1f, 0x01
+};
+
+
 
 
 
@@ -460,6 +509,18 @@ void load_key(uint8_t use_fake)
         load_bigint_from_os(&(priv_key.components[2]), dp4, sizeof(dp4));
         load_bigint_from_os(&(priv_key.components[3]), dq4, sizeof(dq4));
         load_bigint_from_os(&(priv_key.components[4]), qinv4, sizeof(qinv4));
+
+    } else if (use_fake == 5){
+         /*data mit 16 Bytes Primzahlen*/
+        load_bigint_from_os(&pub_key.modulus, modulus5, sizeof(modulus5));
+        memcpy(&priv_key.modulus, &pub_key.modulus, sizeof(bigint_t));
+        load_bigint_from_os(&pub_key.exponent, pub_exponent5, sizeof(pub_exponent5));
+        priv_key.n = 5;
+        load_bigint_from_os(&(priv_key.components[0]), p5, sizeof(p5));
+        load_bigint_from_os(&(priv_key.components[1]), q5, sizeof(q5));
+        load_bigint_from_os(&(priv_key.components[2]), dp5, sizeof(dp5));
+        load_bigint_from_os(&(priv_key.components[3]), dq5, sizeof(dq5));
+        load_bigint_from_os(&(priv_key.components[4]), qinv5, sizeof(qinv5));
         
         
     } else {
@@ -579,8 +640,9 @@ void rsa_init(void)
 {
     pre_alloc_key_crt();
     //load_key(2);       // use 2 Byte prim data
-    load_key(4);         // use 8 byte prim data 
+    //load_key(4);         // use 8 byte prim data 
     //load_key(3);          // use 32 Byte prim data
+    load key(5);           // use 16 Byte prim data
 }    
 
 #endif
