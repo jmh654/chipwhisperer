@@ -641,8 +641,8 @@ void rsa_init(void)
     pre_alloc_key_crt();
     //load_key(2);       // use 2 Byte prim data
     //load_key(4);         // use 8 byte prim data 
-    //load_key(3);          // use 32 Byte prim data
-    load key(5);           // use 16 Byte prim data
+    load_key(3);          // use 32 Byte prim data
+    //load_key(5);           // use 16 Byte prim data
 }    
 
 #endif

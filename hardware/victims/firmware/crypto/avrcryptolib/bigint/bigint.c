@@ -827,14 +827,14 @@ void bigint_expmod_u(bigint_t* dest, const bigint_t* a, const bigint_t* exp, con
 	bigint_word_t t, base_b[MAX(a->length_B,r->length_B)], res_b[r->length_B*2];
 	uint16_t i;
 	uint8_t j;
-//	uint16_t *xaddr = &i;
-//	cli_putstr("\r\npre-alloc (");
-//	cli_hexdump_rev(&xaddr, 4);
-//	cli_putstr(") ...");
+	uint16_t *xaddr = &i;
+	//cli_putstr("\r\npre-alloc (");
+	//cli_hexdump_rev(&xaddr, 4);
+	//cli_putstr(") ...");
 	res.wordv = res_b;
 	base.wordv = base_b;
 	bigint_copy(&base, a);
-//	cli_putstr("\r\npost-copy");
+	//cli_putstr("\r\npost-copy");
 	bigint_reduce(&base, r);
 	res.wordv[0]=1;
 	res.length_B=1;
@@ -845,7 +845,7 @@ void bigint_expmod_u(bigint_t* dest, const bigint_t* a, const bigint_t* exp, con
 		return;
 	}
 //#if PRINT_STATUS
-//    putch('+');
+ //   putch('+');
 //#endif
 	uint8_t flag = 0;
 	t=exp->wordv[exp->length_B - 1];
@@ -855,25 +855,34 @@ void bigint_expmod_u(bigint_t* dest, const bigint_t* a, const bigint_t* exp, con
         //if (i==4) {
          //   break;//new
         //}
+//#if PRINT_STATUS
+            //bigint_print_hex(res);
+  //          putch('*');
+//#endif
         
         t = exp->wordv[i - 1];
-		for(j=BIGINT_WORD_SIZE; j > 0; --j){
+		for(j=BIGINT_WORD_SIZE; j > 0; --j){ //BIGINT_WORD_SIZE = 8
 //#if PRINT_STATUS
 //           putch('.');
 //#endif
 			if(!flag){
 				if(t & (1<<(BIGINT_WORD_SIZE-1))){
 					flag = 1;
+                    //cli_putstr("!flag"); //add for debug
 				}
 			}
-			if(flag){            
+			if(flag){   
+                //cli_putstr("b "); //add for debug
 				bigint_square(&res, &res);
+                //cli_putstr("sq "); //add for debug
 				bigint_reduce(&res, r);
+                //cli_putstr("red "); //add for debug
 				if(t & (1<<(BIGINT_WORD_SIZE-1))){
                     //PORTA.OUTSET = PIN0_bm;
 					bigint_mul_u(&res, &res, &base);
 					bigint_reduce(&res, r);
                     //PORTA.OUTCLR = PIN0_bm;
+                    //cli_putstr("mul"); //add for debug
 				}
 			}
 			t<<=1;
@@ -882,9 +891,9 @@ void bigint_expmod_u(bigint_t* dest, const bigint_t* a, const bigint_t* exp, con
 	}
 
 //#if PRINT_STATUS
-//    putch('\n');
+    putch('\n');
 //#endif
-//	cli_putc('+');
+	//cli_putc('+');
 	SET_POS(&res);
 	bigint_copy(dest, &res);
 }

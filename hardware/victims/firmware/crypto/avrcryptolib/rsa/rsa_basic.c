@@ -28,7 +28,7 @@
 #include "hal.h"
 #include "simpleserial.h"
 
-#define DEBUG 1
+#define DEBUG 0
 
 //#if DEBUG
 #include "cli.h"
