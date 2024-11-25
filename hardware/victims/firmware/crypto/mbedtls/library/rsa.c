@@ -505,7 +505,7 @@ int mbedtls_rsa_private( mbedtls_rsa_context *ctx,
     MBEDTLS_MPI_CHK( mbedtls_mpi_exp_mod( &T2, &T, DQ, &ctx->Q, &ctx->RQ ) );
 
     /*
-     * T = (T1 - T2) * (Q^-1 mod P) mod P
+     * T = (T1 - T2) * (Q^-1 mod P) mod P   !!!!!!!!hier: wass wenn T1-T2 neg: 
      */
     MBEDTLS_MPI_CHK( mbedtls_mpi_sub_mpi( &T, &T1, &T2 ) );
     MBEDTLS_MPI_CHK( mbedtls_mpi_mul_mpi( &T1, &T, &ctx->QP ) );

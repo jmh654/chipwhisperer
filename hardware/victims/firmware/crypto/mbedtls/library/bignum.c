@@ -809,19 +809,19 @@ int mbedtls_mpi_cmp_abs( const mbedtls_mpi *X, const mbedtls_mpi *Y )
 {
     size_t i, j;
 
-    for( i = X->n; i > 0; i-- )
+    for( i = X->n; i > 0; i-- )  // get position first bit, that is not 0
         if( X->p[i - 1] != 0 )
             break;
 
-    for( j = Y->n; j > 0; j-- )
+    for( j = Y->n; j > 0; j-- ) 
         if( Y->p[j - 1] != 0 )
             break;
 
     if( i == 0 && j == 0 )
         return( 0 );
 
-    if( i > j ) return(  1 );
-    if( j > i ) return( -1 );
+    if( i > j ) return(  1 ); // wenn x<y dann 1 
+    if( j > i ) return( -1 ); //-1 sonst 
 
     for( ; i > 0; i-- )
     {
@@ -1035,24 +1035,25 @@ cleanup:
 /*
  * Signed subtraction: X = A - B
  */
-int mbedtls_mpi_sub_mpi( mbedtls_mpi *X, const mbedtls_mpi *A, const mbedtls_mpi *B )
+int mbedtls_mpi_sub_mpi( mbedtls_mpi *X, const mbedtls_mpi *A, const mbedtls_mpi *B ) // !!!! in rsa.c privat key operation 
 {
     int ret, s = A->s;
 
-    if( A->s * B->s > 0 )
+    if( A->s * B->s > 0 ) // wenn beide zahlen gleiches VZ?
     {
-        if( mbedtls_mpi_cmp_abs( A, B ) >= 0 )
+        //trigger_hight();
+        if( mbedtls_mpi_cmp_abs( A, B ) >= 0 ) // wenn A > B: 1, sonst -1 -> wenn A > B
         {
-            MBEDTLS_MPI_CHK( mbedtls_mpi_sub_abs( X, A, B ) );
+            MBEDTLS_MPI_CHK( mbedtls_mpi_sub_abs( X, A, B ) ); // subtraktion liefert immer ein positives ergebnos 
             X->s =  s;
         }
-        else
+        else // wenn B > A
         {
             MBEDTLS_MPI_CHK( mbedtls_mpi_sub_abs( X, B, A ) );
             X->s = -s;
         }
     }
-    else
+    else // wenn unterschidl VZ: addition 
     {
         MBEDTLS_MPI_CHK( mbedtls_mpi_add_abs( X, A, B ) );
         X->s = s;
