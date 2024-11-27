@@ -34,7 +34,7 @@ TARGET = simpleserial-rsa
 
 # List C source files here.
 # Header files (.h) are automatically pulled in.
-SRC += simpleserial-rsa.c simpleserial-rsa-xmega.c simpleserial-rsa-arm.c
+SRC += simpleserial-rsa.c simpleserial-rsa-mbedtls.c #simpleserial-rsa-xmega.c
 
 # -----------------------------------------------------------------------------
 
