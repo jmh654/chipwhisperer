@@ -22,6 +22,8 @@
 #include <stdint.h>
 #include <stdlib.h>
 
+#include <avr/pgmspace.h> //für memcpy_p
+
 //was macht da?
 #if (HAL_TYPE == HAL_xmega) || (HAL_TYPE == HAL_avr) 
 
@@ -36,6 +38,51 @@ uint8_t sig_chunk_2(uint8_t *pt, uint8_t len);
 //nötig?
 #define mbedtls_calloc calloc
 #define mbedtls_free free
+
+
+/**********************************************************************************************
+   RSA KEY #2 (2Bytes)
+**********************************************************************************************/
+/* Primzahl 1 p (2 Bytes): 62549 */
+const uint8_t p2[] PROGMEM = {
+0xf4, 0x55
+};
+
+/* Primzahl 2 q (2 Bytes): 61543*/
+const uint8_t q2[] PROGMEM = {
+0xf0, 0x67
+};
+
+/* Exponent 1 dp: 11321*/
+const uint8_t dp2[] PROGMEM = {
+0x2c, 0x39
+};
+
+/* Exponent 2 dq:647 */
+const uint8_t dq2[] PROGMEM = {
+0x02, 0x87
+};
+
+/* qinv:34632 */
+const uint8_t qinv2[] PROGMEM = {
+0x87, 0x48
+};
+
+/* modulus n: 3849453107 */
+const uint8_t modulus2[] PROGMEM = {
+0xe5, 0x71, 0xfe, 0x33
+};
+
+/* pub exponent e: 65537 */
+const uint8_t pub_exponent2[] PROGMEM = {
+0x01, 0x00, 0x01
+};
+
+/* priv exponent d: 1128127049*/
+const uint8_t priv_exponent2[] PROGMEM = {
+0x43, 0x3d, 0xda, 0x49
+};
+
 
 // MWC random number implementation - https://en.wikipedia.org/wiki/Multiply-with-carry_pseudorandom_number_generator
 #define PHI 0x9e3779b9
@@ -102,10 +149,6 @@ rsa_privatekey_t priv_key;
 #define DP dp
 #define DQ dq
 #define QINV qinv
-
-#ifndef MAX
- #define MAX(a,b) (((a)>(b))?(a):(b))
-#endif
 */
 
 /*
@@ -205,7 +248,21 @@ cleanup:
 }
 
 
+void load_key_from_flash(mbedtls_mpi *X, PGM_VOID_P os) {
+    uint16_t length = sizeof(os);
+    
+    //temp buffer to store key from flash
+    uint8_t key_buf[length]; //Anzahl der Bytes : 4 oder lenght
 
+    //copy data from flash to buffer
+    //dest, src, len
+    memcpy_P(key_buf, os, length);
+
+    // convert into mbedtls datatype
+    // result number:&rsa_ctx.N; buffer(bigend): RSA_N; bufferlen (buffergröße in bytes?)
+    mbedtls_mpi_read_binary( X, key_buf, length);
+    
+}
 
 
 void rsa_init(void)
@@ -223,10 +280,11 @@ void rsa_init(void)
     rsa_ctx.len = RSA_KEY_LEN;
 
     //load key data into ctx
-
-    // result number:&rsa_ctx.N; buffer(bigend): RSA_N; bufferlen (buffergröße in bytes?)
-    //mebdtls_mpi_read_binary( &rsa_ctx.N , RSA_N, 4 );
+    //from progmem
+    //load_key_from_flash( &rsa_ctx.N, modulus2);
     
+    //from string
+    //dest*, radix, char*
     mbedtls_mpi_read_string( &rsa_ctx.N , 16, RSA_N  ) ;
     mbedtls_mpi_read_string( &rsa_ctx.E , 16, RSA_E  ) ;
     mbedtls_mpi_read_string( &rsa_ctx.D , 16, RSA_D  ) ;
