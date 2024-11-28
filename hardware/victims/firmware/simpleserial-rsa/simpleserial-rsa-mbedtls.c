@@ -87,7 +87,7 @@ const uint8_t priv_exponent2[] PROGMEM = {
 // MWC random number implementation - https://en.wikipedia.org/wiki/Multiply-with-carry_pseudorandom_number_generator
 #define PHI 0x9e3779b9
 
-static uint32_t Q[4096], c = 362436;
+static uint32_t Q[1024], c = 362436;
 
 void init_rand(uint32_t x)
 {
@@ -97,7 +97,7 @@ void init_rand(uint32_t x)
     Q[1] = x + PHI;
     Q[2] = x + PHI + PHI;
 
-    for (i = 3; i < 4096; i++)
+    for (i = 3; i < 1024; i++)
             Q[i] = Q[i - 3] ^ Q[i - 2] ^ PHI ^ i;
 }
 
@@ -273,6 +273,7 @@ void rsa_init(void)
 
     //initialisiert ctx 
     mbedtls_rsa_init( &rsa_ctx, MBEDTLS_RSA_PKCS_V15, 0 ); // ctx->padding = MBEDTLS_RSA_PKCS_V15 ersetzten?  
+    //warum? warnung bei comipilieren mit ss_ver_2_1
     simpleserial_addcmd('1', 0, sig_chunk_1);
     simpleserial_addcmd('2', 0, sig_chunk_2);
     
