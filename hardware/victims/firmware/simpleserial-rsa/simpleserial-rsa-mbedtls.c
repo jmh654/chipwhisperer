@@ -85,6 +85,7 @@ const uint8_t priv_exponent2[] PROGMEM = {
 
 
 // MWC random number implementation - https://en.wikipedia.org/wiki/Multiply-with-carry_pseudorandom_number_generator
+//für add padding 
 #define PHI 0x9e3779b9
 
 static uint32_t Q[1024], c = 362436;
@@ -104,9 +105,9 @@ void init_rand(uint32_t x)
 uint32_t rand_cmwc(void)
 {
     uint64_t t, a = 18782LL;
-    static uint32_t i = 4095;
+    static uint32_t i = 1023;
     uint32_t x, r = 0xfffffffe;
-    i = (i + 1) & 4095;
+    i = (i + 1) & 1023;
     t = a * Q[i] + c;
     c = (t >> 32);
     x = t + c;
@@ -180,6 +181,11 @@ unsigned char rsa_plaintext[PT_LEN];
 unsigned char rsa_decrypted[PT_LEN];
 unsigned char rsa_ciphertext[RSA_KEY_LEN];
 
+//debugging
+uint8_t debug_buffer[32];
+size_t debug_buffer_len; 
+//mbedtls_mpi_write_string( X, 10, debug_buffer, sizeof( debug_buffer ), &debug_buffer_len);
+//simpleserial_put('r', (uint8_t) debug_buffer_len, debug_buffer );
 
 /*
  * Do an RSA private key operation
@@ -225,14 +231,31 @@ static int simpleserial_mbedtls_rsa_private( mbedtls_rsa_context *ctx,
      */
     trigger_high();
     MBEDTLS_MPI_CHK( mbedtls_mpi_sub_mpi( &T, &T1, &T2 ) );
+    trigger_low();
+    //trigger_high();
+
+
+    //debug
+    mbedtls_mpi_write_string( &T, 10, debug_buffer, sizeof( debug_buffer ), &debug_buffer_len);
+    simpleserial_put('r', (uint8_t) debug_buffer_len, debug_buffer );
+
+    
     MBEDTLS_MPI_CHK( mbedtls_mpi_mul_mpi( &T1, &T, &ctx->QP ) );
+    //trigger_low();
     MBEDTLS_MPI_CHK( mbedtls_mpi_mod_mpi( &T, &T1, &ctx->P ) );
+    
+    mbedtls_mpi_write_string( &T, 10, debug_buffer, sizeof( debug_buffer ), &debug_buffer_len);
+    simpleserial_put('r', (uint8_t) debug_buffer_len, debug_buffer );
+    
 
     /*
      * T = T2 + T * Q
      */
     MBEDTLS_MPI_CHK( mbedtls_mpi_mul_mpi( &T1, &T, &ctx->Q ) );
     MBEDTLS_MPI_CHK( mbedtls_mpi_add_mpi( &T, &T2, &T1 ) );
+    
+    mbedtls_mpi_write_string( &T, 10, debug_buffer, sizeof( debug_buffer ), &debug_buffer_len);
+    simpleserial_put('r', (uint8_t) debug_buffer_len, debug_buffer );
 
     olen = ctx->len;
     MBEDTLS_MPI_CHK( mbedtls_mpi_write_binary( &T, output, olen ) );
@@ -273,6 +296,7 @@ void rsa_init(void)
 
     //initialisiert ctx 
     mbedtls_rsa_init( &rsa_ctx, MBEDTLS_RSA_PKCS_V15, 0 ); // ctx->padding = MBEDTLS_RSA_PKCS_V15 ersetzten?  
+    
     //warum? warnung bei comipilieren mit ss_ver_2_1
     simpleserial_addcmd('1', 0, sig_chunk_1);
     simpleserial_addcmd('2', 0, sig_chunk_2);
@@ -281,12 +305,12 @@ void rsa_init(void)
     rsa_ctx.len = RSA_KEY_LEN;
 
     //load key data into ctx
-    //from progmem
-    //load_key_from_flash( &rsa_ctx.N, modulus2);
     
-    //from string
-    //dest*, radix, char*
-    mbedtls_mpi_read_string( &rsa_ctx.N , 16, RSA_N  ) ;
+    //from progmem
+    load_key_from_flash( &rsa_ctx.N, modulus2);
+    
+    //from string; dest*, radix, char*
+    //mbedtls_mpi_read_string( &rsa_ctx.N , 16, RSA_N  ) ;
     mbedtls_mpi_read_string( &rsa_ctx.E , 16, RSA_E  ) ;
     mbedtls_mpi_read_string( &rsa_ctx.D , 16, RSA_D  ) ;
     mbedtls_mpi_read_string( &rsa_ctx.P , 16, RSA_P  ) ;
@@ -295,15 +319,21 @@ void rsa_init(void)
     mbedtls_mpi_read_string( &rsa_ctx.DQ, 16, RSA_DQ ) ;
     mbedtls_mpi_read_string( &rsa_ctx.QP, 16, RSA_QP ) ;
 
+    //mbedtls_mpi_write_string( &rsa_ctx.P, 10, debug_buffer, sizeof( debug_buffer ), &debug_buffer_len);
+    //simpleserial_put('r', (uint8_t) debug_buffer_len, debug_buffer );
+    
+    //mbedtls_mpi_write_string( &rsa_ctx.N, 10, debug_buffer, sizeof( debug_buffer ), &debug_buffer_len);
+    //simpleserial_put('r', (uint8_t) debug_buffer_len, debug_buffer );
+
     
 
     //Make valid data first, otherwise system barfs 
-    //was macht? nötig? 
-    //kopiert rsa_pt an rsa_plaintext
-    memcpy( rsa_plaintext, RSA_PT, PT_LEN );
-    //adds message padding, input plaintest, output ciphertest
-    mbedtls_rsa_pkcs1_encrypt( &rsa_ctx, myrand, NULL, MBEDTLS_RSA_PUBLIC, PT_LEN,
-                           rsa_plaintext, rsa_ciphertext );
+    //kein andrer output
+    //kopiert rsa_pt an rsa_plaintext nötig für mbedtls_rsa_pkcs1_encrypt
+    //memcpy( rsa_plaintext, RSA_PT, PT_LEN );
+    
+    //encrypts depending on padding either pkcs1_v15 or oaep; adds message padding, input plaintest, output ciphertest; nötig ??
+    //mbedtls_rsa_pkcs1_encrypt( &rsa_ctx, myrand, NULL, MBEDTLS_RSA_PUBLIC, PT_LEN, rsa_plaintext, rsa_ciphertext );
 } 
 
 
@@ -320,19 +350,43 @@ uint8_t real_dec(uint8_t *pt, uint8_t len)
     int ret = 0;
 
     //first need to hash our message
-    //nötig? MESSAGE aonders verschlüsseln?
-    memset(buf, 0, 128);  //copyes the 128 mal 0 an den pointer buf
-    mbedtls_sha256(MESSAGE, 12, hash, 0); //verschlüsselt message und speichert an hash? 
+    //nötig? MESSAGE aonders?
+    //memset(buf, 0, 128);  //copyes the 128 mal 0 an den pointer buf
+    //mbedtls_sha256(MESSAGE, 12, hash, 0); //hashed message und speichert an hash? 
 
     //ret = simpleserial_mbedtls_rsa_rsassa_pkcs1_v15_sign(&rsa_ctx, NULL, NULL, MBEDTLS_RSA_PRIVATE, MBEDTLS_MD_SHA256, 32, hash, buf);
     // const unsigned char *hash, unsigned char *sig
 
-
-    //buf bzw hash verwenden -> putput = buf, input = hash? größe anpassen?
-    ret = simpleserial_mbedtls_rsa_private( &rsa_ctx, NULL, NULL, hash, buf );
-    //const unsigned char *input,unsigned char *output //
+    //buf bzw hash verwenden -> output = buf, input = hash? größe anpassen?
+    //const unsigned char *input,unsigned char *output 
+    //ret = simpleserial_mbedtls_rsa_private( &rsa_ctx, NULL, NULL, hash, buf );
     
-    trigger_low();
+
+
+    //ODER: get data from buffer pt
+    //pt in const unsigned char *input
+    uint8_t temp[4];
+    memcpy(temp, pt, len);
+
+    //debug -> msg in temp
+    simpleserial_put('r', 4, temp);
+    
+    //input, output
+    ret = simpleserial_mbedtls_rsa_private( &rsa_ctx, NULL, NULL, temp, buf );
+    
+    //debug -> so net
+    //temp[2] = (uint8_t)((ret >> 8) & 0xFF);
+    //temp[3] = (uint8_t)(ret & 0xFF);         // LSB
+    //simpleserial_put('r', 4, temp);
+
+    uint8_t temp2[8];
+    //num, buff, radix
+    itoa(ret, temp2, 10);
+    simpleserial_put('r', 4, temp2);
+
+    simpleserial_put('r', 4, buf);
+    
+    //trigger_low();
 
     //send back first 48 bytes
 #if SS_VER == SS_VER_2_1
