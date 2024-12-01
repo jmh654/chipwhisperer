@@ -157,6 +157,7 @@ rsa_privatekey_t priv_key;
  */
 #define RSA_KEY_LEN 4 
 //wenn 2, dann in simpleserial_mbedtls_rsa_private in MBEDTLS_MPI_CHK( mbedtls_mpi_read_binary( &T, input, ctx->len ) ); probleme
+//-> immer 2*bytes(p), also #bytes von N
 
 #define RSA_N   "E571FE33" 
 #define RSA_E   "10001"
@@ -217,10 +218,10 @@ static int simpleserial_mbedtls_rsa_private( mbedtls_rsa_context *ctx,
 
     MBEDTLS_MPI_CHK( mbedtls_mpi_read_binary( &T, input, ctx->len ) );
     //debug 
-    simpleserial_put('r', 8, input ); // für 0xa433059b -> rA433 / A433059B00000000
+    //simpleserial_put('r', sizeof(input)*2, input ); // für 0xa433059b -> rA433, mit *2: A433059B
     
-    mbedtls_mpi_write_string( &T, 16, debug_buffer, 64, &debug_buffer_len);
-    simpleserial_put('r', (uint8_t) debug_buffer_len, debug_buffer ); // für 0xa433059b -> r41 34 33 33 00 = A433 -> change rsa_key_len von 2 auf 4 -> r41 34 33 33 30 35 39 42 00 = A433059B -> passt
+    //mbedtls_mpi_write_string( &T, 16, debug_buffer, 64, &debug_buffer_len);
+    //simpleserial_put('r', (uint8_t) debug_buffer_len, debug_buffer ); // für 0xa433059b -> r41 34 33 33 00 = A433 -> change rsa_key_len von 2 auf 4 -> r41 34 33 33 30 35 39 42 00 = A433059B -> passt
     
     if( mbedtls_mpi_cmp_mpi( &T, &ctx->N ) >= 0 )
     {
@@ -241,15 +242,19 @@ static int simpleserial_mbedtls_rsa_private( mbedtls_rsa_context *ctx,
     MBEDTLS_MPI_CHK( mbedtls_mpi_exp_mod( &T1, &T, DP, &ctx->P, &ctx->RP ) );
     //debug
     mbedtls_mpi_write_string( &T1, 16, debug_buffer, sizeof( debug_buffer ), &debug_buffer_len);
-    simpleserial_put('r', (uint8_t) debug_buffer_len, debug_buffer );
+    simpleserial_put('r', (uint8_t) debug_buffer_len, debug_buffer ); // for 0xa433059b -> r333600 (ASCII)-> 36(HEX) -> 54 (DEC)
     mbedtls_mpi_write_string( DP, 16, debug_buffer, sizeof( debug_buffer ), &debug_buffer_len);
     simpleserial_put('r', (uint8_t) debug_buffer_len, debug_buffer );
-    mbedtls_mpi_write_string( &ctx->RP, 16, debug_buffer, sizeof( debug_buffer ), &debug_buffer_len);
+    mbedtls_mpi_write_string( &ctx->P, 16, debug_buffer, sizeof( debug_buffer ), &debug_buffer_len);
     simpleserial_put('r', (uint8_t) debug_buffer_len, debug_buffer );
     
     MBEDTLS_MPI_CHK( mbedtls_mpi_exp_mod( &T2, &T, DQ, &ctx->Q, &ctx->RQ ) );
     //debug
     mbedtls_mpi_write_string( &T2, 16, debug_buffer, sizeof( debug_buffer ), &debug_buffer_len);
+    simpleserial_put('r', (uint8_t) debug_buffer_len, debug_buffer );
+    mbedtls_mpi_write_string( DQ, 16, debug_buffer, sizeof( debug_buffer ), &debug_buffer_len);
+    simpleserial_put('r', (uint8_t) debug_buffer_len, debug_buffer );
+    mbedtls_mpi_write_string( &ctx->Q, 16, debug_buffer, sizeof( debug_buffer ), &debug_buffer_len);
     simpleserial_put('r', (uint8_t) debug_buffer_len, debug_buffer );
 
     /*
@@ -279,12 +284,14 @@ static int simpleserial_mbedtls_rsa_private( mbedtls_rsa_context *ctx,
      */
     MBEDTLS_MPI_CHK( mbedtls_mpi_mul_mpi( &T1, &T, &ctx->Q ) );
     MBEDTLS_MPI_CHK( mbedtls_mpi_add_mpi( &T, &T2, &T1 ) );
-    
-    //mbedtls_mpi_write_string( &T, 10, debug_buffer, sizeof( debug_buffer ), &debug_buffer_len);
-    //simpleserial_put('r', (uint8_t) debug_buffer_len, debug_buffer );
+    //debug
+    mbedtls_mpi_write_string( &T, 16, debug_buffer, sizeof( debug_buffer ), &debug_buffer_len);
+    simpleserial_put('r', (uint8_t) debug_buffer_len, debug_buffer );
 
     olen = ctx->len;
     MBEDTLS_MPI_CHK( mbedtls_mpi_write_binary( &T, output, olen ) );
+    //debug
+    simpleserial_put('r', RSA_KEY_LEN, output );
 
 cleanup:
     mbedtls_mpi_free( &T ); mbedtls_mpi_free( &T1 ); mbedtls_mpi_free( &T2 );
@@ -429,7 +436,7 @@ uint8_t real_dec(uint8_t *pt, uint8_t len)
 
     //get data from buffer pt
     //pt in const unsigned char *input
-    uint8_t temp[8];
+    uint8_t temp[4]; //
     memcpy(temp, pt, len);
 
     //debug -> msg in temp, returns correct value
@@ -439,13 +446,14 @@ uint8_t real_dec(uint8_t *pt, uint8_t len)
     //input, output
     ret = simpleserial_mbedtls_rsa_private( &rsa_ctx, NULL, NULL, temp, buf );
     
-    //ret values of rsa_private: 2D313731
+    //ret values of rsa_private: 2D313731 -> change rsa_key_len 
+    // now: r30000000
     uint8_t temp2[8];
     itoa(ret, temp2, 10); //num, buff, radix
-    simpleserial_put('r', 4, temp2);
+    simpleserial_put('r', 8, temp2);
 
     //output = buf is empty, liefert 00000000, why??
-    //simpleserial_put('r', 4, buf);
+    simpleserial_put('r', 4, buf);
     
     //trigger_low();
 
