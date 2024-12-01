@@ -155,7 +155,8 @@ rsa_privatekey_t priv_key;
 /*
  * Example RSA-1024 keypair, for test purposes
  */
-#define RSA_KEY_LEN 2
+#define RSA_KEY_LEN 4 
+//wenn 2, dann in simpleserial_mbedtls_rsa_private in MBEDTLS_MPI_CHK( mbedtls_mpi_read_binary( &T, input, ctx->len ) ); probleme
 
 #define RSA_N   "E571FE33" 
 #define RSA_E   "10001"
@@ -215,6 +216,12 @@ static int simpleserial_mbedtls_rsa_private( mbedtls_rsa_context *ctx,
     mbedtls_mpi_init( &P1 ); mbedtls_mpi_init( &Q1 ); mbedtls_mpi_init( &R );
 
     MBEDTLS_MPI_CHK( mbedtls_mpi_read_binary( &T, input, ctx->len ) );
+    //debug 
+    simpleserial_put('r', 8, input ); // für 0xa433059b -> rA433 / A433059B00000000
+    
+    mbedtls_mpi_write_string( &T, 16, debug_buffer, 64, &debug_buffer_len);
+    simpleserial_put('r', (uint8_t) debug_buffer_len, debug_buffer ); // für 0xa433059b -> r41 34 33 33 00 = A433 -> change rsa_key_len von 2 auf 4 -> r41 34 33 33 30 35 39 42 00 = A433059B -> passt
+    
     if( mbedtls_mpi_cmp_mpi( &T, &ctx->N ) >= 0 )
     {
         ret = MBEDTLS_ERR_MPI_BAD_INPUT_DATA;
@@ -234,6 +241,10 @@ static int simpleserial_mbedtls_rsa_private( mbedtls_rsa_context *ctx,
     MBEDTLS_MPI_CHK( mbedtls_mpi_exp_mod( &T1, &T, DP, &ctx->P, &ctx->RP ) );
     //debug
     mbedtls_mpi_write_string( &T1, 16, debug_buffer, sizeof( debug_buffer ), &debug_buffer_len);
+    simpleserial_put('r', (uint8_t) debug_buffer_len, debug_buffer );
+    mbedtls_mpi_write_string( DP, 16, debug_buffer, sizeof( debug_buffer ), &debug_buffer_len);
+    simpleserial_put('r', (uint8_t) debug_buffer_len, debug_buffer );
+    mbedtls_mpi_write_string( &ctx->RP, 16, debug_buffer, sizeof( debug_buffer ), &debug_buffer_len);
     simpleserial_put('r', (uint8_t) debug_buffer_len, debug_buffer );
     
     MBEDTLS_MPI_CHK( mbedtls_mpi_exp_mod( &T2, &T, DQ, &ctx->Q, &ctx->RQ ) );
@@ -376,6 +387,7 @@ void rsa_init(void)
     
 
     //Make valid data first, otherwise system barfs 
+    // wenn nicht auskommentiert, nach 3 capute trace -> timeout 0b, 08, sonst 1 mehr 
     //kein andrer output
     //kopiert rsa_pt an rsa_plaintext nötig für mbedtls_rsa_pkcs1_encrypt
     //memcpy( rsa_plaintext, RSA_PT, PT_LEN );
@@ -417,11 +429,12 @@ uint8_t real_dec(uint8_t *pt, uint8_t len)
 
     //get data from buffer pt
     //pt in const unsigned char *input
-    uint8_t temp[4];
+    uint8_t temp[8];
     memcpy(temp, pt, len);
 
     //debug -> msg in temp, returns correct value
-    simpleserial_put('r', 4, temp);
+    // für 0xa433059b -> rA433059B00000000
+    simpleserial_put('r', sizeof(temp), temp);
     
     //input, output
     ret = simpleserial_mbedtls_rsa_private( &rsa_ctx, NULL, NULL, temp, buf );
