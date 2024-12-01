@@ -44,11 +44,14 @@ int main(void)
     trigger_setup();
 
     /* Load all the keys etc */
-    rsa_init();
+    //wird debug wird in ss_rsa_mbedtls nicht ausgegebn -> init in ss_rsa_mbedtls aufrufen 
+    //rsa_init();
 
     simpleserial_init();
-    simpleserial_addcmd('t', 0,  real_dec);
+    //für ss-rsa-mebdtls, # bytes der schlüsselgröße anpassen
+    simpleserial_addcmd('t', 4,  real_dec);
 
+    //für ss-rsa-xmega
     //echte entschlüsselung- verschlüsselte nachricht muss übergeben werden
     // anzahl an erwarteten bytes wird angebeben, max 64
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1 evtl #bytes abändern
