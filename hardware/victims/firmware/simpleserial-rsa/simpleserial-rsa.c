@@ -49,7 +49,7 @@ int main(void)
 
     simpleserial_init();
     //für ss-rsa-mebdtls, # bytes der schlüsselgröße anpassen
-    simpleserial_addcmd('t', 4,  real_dec);
+    simpleserial_addcmd('t', 32,  real_dec);
 
     //für ss-rsa-xmega
     //echte entschlüsselung- verschlüsselte nachricht muss übergeben werden
