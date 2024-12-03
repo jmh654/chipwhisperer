@@ -88,7 +88,7 @@ const uint8_t priv_exponent2[] PROGMEM = {
 //für add padding 
 #define PHI 0x9e3779b9
 
-static uint32_t Q[1024], c = 362436;
+static uint32_t Q[4], c = 362436;
 
 void init_rand(uint32_t x)
 {
@@ -98,16 +98,16 @@ void init_rand(uint32_t x)
     Q[1] = x + PHI;
     Q[2] = x + PHI + PHI;
 
-    for (i = 3; i < 1024; i++)
+    for (i = 3; i < 4; i++)
             Q[i] = Q[i - 3] ^ Q[i - 2] ^ PHI ^ i;
 }
 
 uint32_t rand_cmwc(void)
 {
     uint64_t t, a = 18782LL;
-    static uint32_t i = 1023;
+    static uint32_t i = 3;
     uint32_t x, r = 0xfffffffe;
-    i = (i + 1) & 1023;
+    i = (i + 1) & 3;
     t = a * Q[i] + c;
     c = (t >> 32);
     x = t + c;
