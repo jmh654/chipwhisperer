@@ -86,55 +86,55 @@ const uint8_t priv_exponent2[] PROGMEM = {
 /**********************************************************************************************
    RSA KEY #4 (8Bytes)
 **********************************************************************************************/
-/*
-// Primzahl 1 p (8 Bytes):14091828191315287507 
-const uint8_t p4[] PROGMEM = {
+
+// Primzahl 1 p (8 Bytes):14 091 828 191 315 287 507 
+const uint8_t p8[] PROGMEM = {
 0xc3, 0x90, 0x3b, 0x14, 0x0b, 0x2e, 0xdd, 0xd3
 };
 
-// Primzahl 2 q (8 Bytes): 6353019252147394247
-const uint8_t q4[] PROGMEM = {
+// Primzahl 2 q (8 Bytes): 6 353 019 252 147 394 247
+const uint8_t q8[] PROGMEM = {
 0x58, 0x2a, 0x75, 0x59, 0x9f, 0x76, 0x96, 0xc7
 };
 
 // Exponent 1 dp: 5927267588107438781 
-const uint8_t dp4[] PROGMEM = {
+const uint8_t dp8[] PROGMEM = {
 0x52, 0x41, 0xe2, 0x77, 0xa5, 0xd4, 0x8a, 0xbd
 };
 
 // Exponent 2 dq:2516023234043145363 
-const uint8_t dq4[] PROGMEM = {
+const uint8_t dq8[] PROGMEM = {
 0x22, 0xea, 0xb5, 0xcd, 0x07, 0xc5, 0x6c, 0x93
 };
 
 // qinv: 907488296688955759
-const uint8_t qinv4[] PROGMEM = {
+const uint8_t qinv8[] PROGMEM = {
 0x0c, 0x98, 0x0b, 0xcc, 0x39, 0xf8, 0x31, 0x6f
 
 };
 
 // modulus n:89525655797379415138998373505682772229 
-const uint8_t modulus4[] PROGMEM = {
+const uint8_t modulus8[] PROGMEM = {
 0x43, 0x5a, 0x03, 0x9d, 0xf7, 0x17, 0xd1, 0x60, 0x71, 0x35, 0x7b, 0xdd, 0x73, 0xaa, 0x11, 0x05
 };
 
 // pub exponent e: 65537 
-const uint8_t pub_exponent4[] PROGMEM = {
+const uint8_t pub_exponent8[] PROGMEM = {
 0x01, 0x00, 0x01
 };
 
 // priv exponent d: 78459428511806828001727883835233122001
-const uint8_t priv_exponent4[] PROGMEM = {
+const uint8_t priv_exponent8[] PROGMEM = {
 0x3b, 0x06, 0xbc, 0x7c, 0xc8, 0x7c, 0xdb, 0x45, 0xcd, 0xc8, 0x5c, 0x5a, 0x8f, 0xb5, 0xb6, 0xd1
 };
 
-*/
+
 
 
 /*
  * Example RSA-1024 keypair, for test purposes
  */
-#define RSA_KEY_LEN 4
+#define RSA_KEY_LEN 16
 //wenn 2, dann in simpleserial_mbedtls_rsa_private in MBEDTLS_MPI_CHK( mbedtls_mpi_read_binary( &T, input, ctx->len ) ); probleme
 //-> immer 2*bytes(p), also #bytes von N
 
@@ -384,7 +384,7 @@ void rsa_init(void)
     */
 
     //load key data into ctx
-    
+    /*
     //from progmem
     load_key_from_flash( &rsa_ctx.N, modulus2, sizeof(modulus2));
     load_key_from_flash( &rsa_ctx.E, pub_exponent2, sizeof(pub_exponent2));
@@ -394,6 +394,18 @@ void rsa_init(void)
     load_key_from_flash( &rsa_ctx.DP, dp2, sizeof(dp2));
     load_key_from_flash( &rsa_ctx.DQ, dq2, sizeof(dq2));
     load_key_from_flash( &rsa_ctx.QP, qinv2, sizeof(qinv2));
+    */
+
+    //from progmem
+    load_key_from_flash( &rsa_ctx.N, modulus8, sizeof(modulus8));
+    load_key_from_flash( &rsa_ctx.E, pub_exponent8, sizeof(pub_exponent8));
+    load_key_from_flash( &rsa_ctx.D, priv_exponent8, sizeof(priv_exponent8));
+    load_key_from_flash( &rsa_ctx.P, p8, sizeof(p8));
+    load_key_from_flash( &rsa_ctx.Q, q8, sizeof(q8));
+    load_key_from_flash( &rsa_ctx.DP, dp8, sizeof(dp8));
+    load_key_from_flash( &rsa_ctx.DQ, dq8, sizeof(dq8));
+    load_key_from_flash( &rsa_ctx.QP, qinv8, sizeof(qinv8));
+
 
     /*
     //from string; dest*, radix, char*
