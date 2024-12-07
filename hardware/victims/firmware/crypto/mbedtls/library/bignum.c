@@ -47,6 +47,7 @@
 #include "mbedtls/bn_mul.h"
 
 #include <string.h>
+#include <stdio.h>
 
 #if defined(MBEDTLS_PLATFORM_C)
 #include "mbedtls/platform.h"
@@ -121,6 +122,7 @@ int mbedtls_mpi_grow( mbedtls_mpi *X, size_t nblimbs )
     if( X->n < nblimbs )
     {
         if( ( p = (mbedtls_mpi_uint*)mbedtls_calloc( nblimbs, ciL ) ) == NULL )
+            //printf("calloc failed in mpi_gpow");
             return( MBEDTLS_ERR_MPI_ALLOC_FAILED );
 
         if( X->p != NULL )
@@ -685,7 +687,7 @@ int mbedtls_mpi_read_binary( mbedtls_mpi *X, const unsigned char *buf, size_t bu
         X->p[j / ciL] |= ((mbedtls_mpi_uint) buf[i - 1]) << ((j % ciL) << 3);
 
 cleanup:
-
+    //printf("%d", ret);
     return( ret );
 }
 

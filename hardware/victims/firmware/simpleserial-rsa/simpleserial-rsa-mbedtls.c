@@ -83,170 +83,58 @@ const uint8_t priv_exponent2[] PROGMEM = {
 0x43, 0x3d, 0xda, 0x49
 };
 
-
-/**********************************************************************************************
-   RSA KEY #5 (16Bytes)
-**********************************************************************************************/
-/* Primzahl 1 p (16 Bytes): 267882443680857975761967467408531606417 */
-const uint8_t p5[] PROGMEM = {
-0xc9, 0x88, 0x48, 0x30, 0x3d, 0x06, 0x09, 0xbd, 0x39, 0x0b, 0xfe, 0xeb, 0xe5, 0xef, 0x4b, 0x91
-};
-
-/* Primzahl 2 q (16 Bytes):195126513202591094461357355156264195281 */
-const uint8_t q5[] PROGMEM = {
-0x92, 0xcb, 0xff, 0xdd, 0x66, 0xdf, 0xbe, 0x4f, 0xc1, 0xb2, 0x67, 0xf7, 0x38, 0x9c, 0x14, 0xd1
-};
-
-/* Exponent 1 dp: 256641820519554293363545041368684467889*/
-const uint8_t dp5[] PROGMEM = {
-0xc1, 0x13, 0x6a, 0xad, 0xa4, 0x59, 0x1b, 0x8d, 0x88, 0x90, 0xe0, 0x8a, 0x9a, 0x40, 0x96, 0xb1
-};
-
-/* Exponent 2 dq: 185161326518899860606250116989915167073*/
-const uint8_t dq5[] PROGMEM = {
-0x8b, 0x4c, 0xc6, 0x3a, 0x64, 0xda, 0xc1, 0x0f, 0x92, 0x31, 0x27, 0xf3, 0x33, 0x66, 0xf9, 0x61
-};
-
-/* qinv: 152353370281789692140390938043637092096*/
-const uint8_t qinv5[] PROGMEM = {
-0x72, 0x9e, 0x31, 0x19, 0x80, 0xe1, 0x0a, 0x45, 0xae, 0x39, 0xbb, 0x48, 0x04, 0x5c, 0xcf, 0x00
-};
-
-/* modulus n: 52270967183635299110959169812507925945033892524340745668343932985606720718177  */
-const uint8_t modulus5[] PROGMEM = {
-0x73, 0x90, 0x51, 0xa9, 0xcc, 0x98, 0xa4, 0x11, 0x5e, 0xf2, 0xcd, 0x6b, 0x14, 0xc6, 0x7e, 0x25, 0x7d, 0xcd,
-0x81, 0x31, 0xbd, 0x3a, 0x36, 0x3b, 0x71, 0xdd, 0x42, 0xce, 0x2e, 0xa0, 0x05, 0x61
-};
-
-/* pub exponent e: 65537 */
-const uint8_t pub_exponent5[] PROGMEM = {
-0x01, 0x00, 0x01
-};
-
-/* priv exponent d: 29085331343906929714197293827192677959330857546950047073312239160804581777153 */
-const uint8_t priv_exponent5[] PROGMEM = {
-0x40, 0x4d, 0xb6, 0xd3, 0x27, 0xf0, 0x6b, 0xa2, 0xea, 0xd5, 0x6a, 0x2e, 0x42, 0x72, 0x2c, 0xb0, 0x88, 0x1b, 
-0xbf, 0x0a, 0xf2, 0x39, 0x43, 0xd2, 0x01, 0x20, 0x9f, 0xb8, 0x8d, 0xcb, 0x1f, 0x01
-};
-
 /**********************************************************************************************
    RSA KEY #4 (8Bytes)
 **********************************************************************************************/
-/* Primzahl 1 p (8 Bytes):14091828191315287507 */
+/*
+// Primzahl 1 p (8 Bytes):14091828191315287507 
 const uint8_t p4[] PROGMEM = {
 0xc3, 0x90, 0x3b, 0x14, 0x0b, 0x2e, 0xdd, 0xd3
 };
 
-/* Primzahl 2 q (8 Bytes): 6353019252147394247*/
+// Primzahl 2 q (8 Bytes): 6353019252147394247
 const uint8_t q4[] PROGMEM = {
 0x58, 0x2a, 0x75, 0x59, 0x9f, 0x76, 0x96, 0xc7
 };
 
-/* Exponent 1 dp: 5927267588107438781 */
+// Exponent 1 dp: 5927267588107438781 
 const uint8_t dp4[] PROGMEM = {
 0x52, 0x41, 0xe2, 0x77, 0xa5, 0xd4, 0x8a, 0xbd
 };
 
-/* Exponent 2 dq:2516023234043145363 */
+// Exponent 2 dq:2516023234043145363 
 const uint8_t dq4[] PROGMEM = {
 0x22, 0xea, 0xb5, 0xcd, 0x07, 0xc5, 0x6c, 0x93
 };
 
-/* qinv: 907488296688955759*/
+// qinv: 907488296688955759
 const uint8_t qinv4[] PROGMEM = {
 0x0c, 0x98, 0x0b, 0xcc, 0x39, 0xf8, 0x31, 0x6f
 
 };
 
-/* modulus n:89525655797379415138998373505682772229 */
+// modulus n:89525655797379415138998373505682772229 
 const uint8_t modulus4[] PROGMEM = {
 0x43, 0x5a, 0x03, 0x9d, 0xf7, 0x17, 0xd1, 0x60, 0x71, 0x35, 0x7b, 0xdd, 0x73, 0xaa, 0x11, 0x05
 };
 
-/* pub exponent e: 65537 */
+// pub exponent e: 65537 
 const uint8_t pub_exponent4[] PROGMEM = {
 0x01, 0x00, 0x01
 };
 
-/* priv exponent d: 78459428511806828001727883835233122001*/
+// priv exponent d: 78459428511806828001727883835233122001
 const uint8_t priv_exponent4[] PROGMEM = {
 0x3b, 0x06, 0xbc, 0x7c, 0xc8, 0x7c, 0xdb, 0x45, 0xcd, 0xc8, 0x5c, 0x5a, 0x8f, 0xb5, 0xb6, 0xd1
 };
 
-
-/*
-// MWC random number implementation - https://en.wikipedia.org/wiki/Multiply-with-carry_pseudorandom_number_generator
-//für add padding 
-#define PHI 0x9e3779b9
-
-static uint32_t Q[4], c = 362436;
-
-void init_rand(uint32_t x)
-{
-    int i;
-
-    Q[0] = x;
-    Q[1] = x + PHI;
-    Q[2] = x + PHI + PHI;
-
-    for (i = 3; i < 4; i++)
-            Q[i] = Q[i - 3] ^ Q[i - 2] ^ PHI ^ i;
-}
-
-uint32_t rand_cmwc(void)
-{
-    uint64_t t, a = 18782LL;
-    static uint32_t i = 3;
-    uint32_t x, r = 0xfffffffe;
-    i = (i + 1) & 3;
-    t = a * Q[i] + c;
-    c = (t >> 32);
-    x = t + c;
-    if (x < c) {
-            x++;
-            c++;
-    }
-    return (Q[i] = r - x);
-}
-
-static int myrand( void *rng_state, unsigned char *output, size_t len )
-{
-     size_t i;
-
-     if( rng_state != NULL )
-          rng_state  = NULL;
-
-     for( i = 0; i < len; ++i )
-          output[i] = rand_cmwc();
-
-     return( 0 );
-}
-
-
 */
 
-/*
-uint8_t keys_allocated = 0;
-rsa_publickey_t pub_key;
-rsa_privatekey_t priv_key;
-
-#define MSG       message_x
-#define SEED      seed_x
-#define ENCRYPTED encrypted_x
-#define MODULUS modulus
-#define PUB_EXPONENT pub_exponent
-#define PRIV_EXPONENT priv_exponent
-#define P p
-#define Q q
-#define DP dp
-#define DQ dq
-#define QINV qinv
-*/
 
 /*
  * Example RSA-1024 keypair, for test purposes
  */
-#define RSA_KEY_LEN 32 
+#define RSA_KEY_LEN 4
 //wenn 2, dann in simpleserial_mbedtls_rsa_private in MBEDTLS_MPI_CHK( mbedtls_mpi_read_binary( &T, input, ctx->len ) ); probleme
 //-> immer 2*bytes(p), also #bytes von N
 
@@ -261,22 +149,7 @@ rsa_privatekey_t priv_key;
 #define RSA_QP  "8748" 
 */
 
-//was? für add padding
-#define PT_LEN  24 
-//was? für add padding
-#define RSA_PT  "\xAA\xBB\xCC\x03\x02\x01\x00\xFF\xFF\xFF\xFF\xFF" \
-                "\x11\x22\x33\x0A\x0B\x0C\xCC\xDD\xDD\xDD\xDD\xDD"
-
-const char MESSAGE[] =  "Hello World!";
-
 mbedtls_rsa_context rsa_ctx;
-
-/*
-//für add padding 
-unsigned char rsa_plaintext[PT_LEN];
-unsigned char rsa_decrypted[PT_LEN];
-unsigned char rsa_ciphertext[RSA_KEY_LEN];
-*/
 
 //debugging
 uint8_t debug_buffer[64]; //32=8*4, 64=8*8 ->ausgabe 4535373100000000 statt45353731XXXXXXXX
@@ -365,7 +238,7 @@ static int simpleserial_mbedtls_rsa_private( mbedtls_rsa_context *ctx,
     
     //debug 
     mbedtls_mpi_write_string( &T1, 16, debug_buffer, sizeof( debug_buffer ), &debug_buffer_len);
-    simpleserial_put('r', (uint8_t) debug_buffer_len, debug_buffer ); // for 0xa433059b -> r333600 (ASCII)-> 36(HEX) -> 54 (DEC)
+    //simpleserial_put('r', (uint8_t) debug_buffer_len, debug_buffer ); // for 0xa433059b -> r333600 (ASCII)-> 36(HEX) -> 54 (DEC)
     //mbedtls_mpi_write_string( DP, 16, debug_buffer, sizeof( debug_buffer ), &debug_buffer_len);
     //simpleserial_put('r', (uint8_t) debug_buffer_len, debug_buffer );
     //mbedtls_mpi_write_string( &ctx->P, 16, debug_buffer, sizeof( debug_buffer ), &debug_buffer_len);
@@ -380,7 +253,7 @@ static int simpleserial_mbedtls_rsa_private( mbedtls_rsa_context *ctx,
     */
     //debug
     mbedtls_mpi_write_string( &T2, 16, debug_buffer, sizeof( debug_buffer ), &debug_buffer_len);
-    simpleserial_put('r', (uint8_t) debug_buffer_len, debug_buffer );
+    //simpleserial_put('r', (uint8_t) debug_buffer_len, debug_buffer );
     //mbedtls_mpi_write_string( DQ, 16, debug_buffer, sizeof( debug_buffer ), &debug_buffer_len);
     //simpleserial_put('r', (uint8_t) debug_buffer_len, debug_buffer );
     //mbedtls_mpi_write_string( &ctx->Q, 16, debug_buffer, sizeof( debug_buffer ), &debug_buffer_len);
@@ -433,7 +306,7 @@ static int simpleserial_mbedtls_rsa_private( mbedtls_rsa_context *ctx,
     olen = ctx->len;
     MBEDTLS_MPI_CHK( mbedtls_mpi_write_binary( &T, output, olen ) );
     //debug
-    simpleserial_put('r', RSA_KEY_LEN, output );
+    //simpleserial_put('r', RSA_KEY_LEN, output );
 
 cleanup:
     mbedtls_mpi_free( &T ); mbedtls_mpi_free( &T1 ); mbedtls_mpi_free( &T2 );
@@ -442,7 +315,7 @@ cleanup:
     
     //debug
     itoa(ret, temp2, 10); //num, buff, radix
-    simpleserial_put('r', 8, temp2);
+    simpleserial_put('r', sizeof(temp2), temp2);
     // beim 5ten mal: r2D31360000000000 = -16 
     
     
@@ -456,11 +329,12 @@ cleanup:
 void load_key_from_flash(mbedtls_mpi *X, PGM_VOID_P os, size_t length) {
     
     //debug
-    uint8_t temp2[8];
+    //uint8_t temp1[8];
+    /*
     //num, buff, radix
     itoa(length, temp2, 16);
     simpleserial_put('r', sizeof(temp2), temp2);
-    
+    */
     
     //temp buffer to store key from flash
     uint8_t key_buf[length]; //Anzahl der Bytes
@@ -470,20 +344,20 @@ void load_key_from_flash(mbedtls_mpi *X, PGM_VOID_P os, size_t length) {
     memcpy_P(key_buf, os, length);
 
     //debug
-    simpleserial_put('r', length, key_buf); // korrekter output bei 16 byte 
+    //simpleserial_put('r', length, key_buf); // korrekter output bei 16 byte 
 
     // convert into mbedtls datatype
     // result number:&rsa_ctx.N; buffer(bigend): RSA_N; bufferlen (buffergröße in bytes?)
     int ret = mbedtls_mpi_read_binary( X, key_buf, length);
 
-    itoa(ret, temp2, 10); //num, buff, radix
-    simpleserial_put('r', 8, temp2); // liefert r2D31360000000000 -> -16 -> MBEDTLS_ERR_MPI_ALLOC_FAILED  
+    //itoa(ret, temp1, 10); //num, buff, radix
+    //simpleserial_put('r', sizeof(temp1), temp1); // liefert r2D31360000000000 -> -16 -> MBEDTLS_ERR_MPI_ALLOC_FAILED  
     
     //debug
     mbedtls_mpi_write_string( X, 16, debug_buffer, sizeof( debug_buffer ), &debug_buffer_len);
     
     
-    simpleserial_put('r', (uint8_t) debug_buffer_len, debug_buffer ); // 00 bei 16 byte prim 
+    //simpleserial_put('r', (uint8_t) debug_buffer_len, debug_buffer ); // 00 bei 16 byte prim 
 
     
     
@@ -492,51 +366,48 @@ void load_key_from_flash(mbedtls_mpi *X, PGM_VOID_P os, size_t length) {
 
 void rsa_init(void)
 {
-     //debug; wird nur ausgegben wenn rsa_init in real_dec aufgerufen wird 
-    //uint8_t temp2[8] = "T";
-    //num, buff, radix
-    //simpleserial_put('r', 4, temp2);
-    
-//!!!!!!!
-    //init_rand(0);
-
     //initialisiert ctx 
     mbedtls_rsa_init( &rsa_ctx, MBEDTLS_RSA_PKCS_V15, 0 ); // ctx->padding = MBEDTLS_RSA_PKCS_V15 ersetzten?  
     
     //warum? warnung bei comipilieren mit ss_ver_2_1
     simpleserial_addcmd('1', 0, sig_chunk_1);
-    simpleserial_addcmd('2', 0, sig_chunk_2);
+    //simpleserial_addcmd('2', 0, sig_chunk_2);
     
     //load key variables into rsa context 
     rsa_ctx.len = RSA_KEY_LEN;
 
+    /*
     //debug
-    uint8_t temp2[8];
-    itoa(55, temp2, 10); //num, buff, radix
-    simpleserial_put('r', 4, temp2);
+    uint8_t temp3[2];
+    itoa(55, temp3, 10); //num, buff, radix
+    simpleserial_put('r', sizeof(temp3), temp3);
+    */
 
     //load key data into ctx
     
     //from progmem
     load_key_from_flash( &rsa_ctx.N, modulus2, sizeof(modulus2));
-    load_key_from_flash( &rsa_ctx.E, pub_exponent5, sizeof(pub_exponent5));
-    load_key_from_flash( &rsa_ctx.D, priv_exponent5, sizeof(priv_exponent5));
-    load_key_from_flash( &rsa_ctx.P, p5, sizeof(p5));
-    load_key_from_flash( &rsa_ctx.Q, q5, sizeof(q5));
-    load_key_from_flash( &rsa_ctx.DP, dp5, sizeof(dp5));
-    load_key_from_flash( &rsa_ctx.DQ, dq5, sizeof(dq5));
-    load_key_from_flash( &rsa_ctx.QP, qinv5, sizeof(qinv5));
+    load_key_from_flash( &rsa_ctx.E, pub_exponent2, sizeof(pub_exponent2));
+    load_key_from_flash( &rsa_ctx.D, priv_exponent2, sizeof(priv_exponent2));
+    load_key_from_flash( &rsa_ctx.P, p2, sizeof(p2));
+    load_key_from_flash( &rsa_ctx.Q, q2, sizeof(q2));
+    load_key_from_flash( &rsa_ctx.DP, dp2, sizeof(dp2));
+    load_key_from_flash( &rsa_ctx.DQ, dq2, sizeof(dq2));
+    load_key_from_flash( &rsa_ctx.QP, qinv2, sizeof(qinv2));
 
     /*
     //from string; dest*, radix, char*
-    //mbedtls_mpi_read_string( &rsa_ctx.N , 16, RSA_N  ) ;
+    mbedtls_mpi_read_string( &rsa_ctx.N , 16, RSA_N  ) ;
     mbedtls_mpi_read_string( &rsa_ctx.E , 16, RSA_E  ) ;
     mbedtls_mpi_read_string( &rsa_ctx.D , 16, RSA_D  ) ;
     mbedtls_mpi_read_string( &rsa_ctx.P , 16, RSA_P  ) ;
     mbedtls_mpi_read_string( &rsa_ctx.Q , 16, RSA_Q  ) ;
     mbedtls_mpi_read_string( &rsa_ctx.DP, 16, RSA_DP ) ;
     mbedtls_mpi_read_string( &rsa_ctx.DQ, 16, RSA_DQ ) ;
-    mbedtls_mpi_read_string( &rsa_ctx.QP, 16, RSA_QP ) ;
+    int ret = mbedtls_mpi_read_string( &rsa_ctx.QP, 16, RSA_QP ) ;
+    uint8_t temp2[4];
+    itoa(ret, temp2, 10); 
+    simpleserial_put('r', sizeof(temp2), temp2); //2d3136 = -16 alloc failed 
     */
 
     
@@ -554,7 +425,7 @@ void rsa_init(void)
     simpleserial_put('r', (uint8_t) debug_buffer_len, debug_buffer );
     //r343333444441343900 -> passt
     
-
+    /*
     mbedtls_mpi_write_string( &rsa_ctx.E, 16, debug_buffer, sizeof( debug_buffer ), &debug_buffer_len);
     simpleserial_put('r', (uint8_t) debug_buffer_len, debug_buffer );
     mbedtls_mpi_write_string( &rsa_ctx.Q, 16, debug_buffer, sizeof( debug_buffer ), &debug_buffer_len);
@@ -566,17 +437,7 @@ void rsa_init(void)
     mbedtls_mpi_write_string( &rsa_ctx.QP, 16, debug_buffer, sizeof( debug_buffer ), &debug_buffer_len);
     simpleserial_put('r', (uint8_t) debug_buffer_len, debug_buffer );
   
-    
-
-    //Make valid data first, otherwise system barfs 
-    // wenn nicht auskommentiert, nach 3 capute trace -> timeout 0b, 08, sonst 1 mehr 
-    //kein andrer output
-    //kopiert rsa_pt an rsa_plaintext nötig für mbedtls_rsa_pkcs1_encrypt
-    //memcpy( rsa_plaintext, RSA_PT, PT_LEN );
-    
-    //encrypts depending on padding either pkcs1_v15 or oaep; adds message padding, input plaintest, output ciphertest; 
-    //nötig? 
-    //mbedtls_rsa_pkcs1_encrypt( &rsa_ctx, myrand, NULL, MBEDTLS_RSA_PUBLIC, PT_LEN, rsa_plaintext, rsa_ciphertext );
+    */
 } 
 
 
@@ -616,7 +477,7 @@ uint8_t real_dec(uint8_t *pt, uint8_t len)
 
     //debug -> msg in temp, returns correct value
     // für 0xa433059b -> rA433059B00000000
-    //simpleserial_put('r', sizeof(temp), temp);
+    simpleserial_put('r', sizeof(temp), temp);
     
     //input, output
     ret = simpleserial_mbedtls_rsa_private( &rsa_ctx, NULL, NULL, temp, buf );
@@ -649,11 +510,11 @@ uint8_t sig_chunk_1(uint8_t *pt, uint8_t len)
      simpleserial_put('r', 48, buf + 48);
      return 0x00;
 }
-
+/*
 uint8_t sig_chunk_2(uint8_t *pt, uint8_t len)
 {
      simpleserial_put('r', 128 - 48 * 2, buf + 48*2);
      return 0x00;
 }
-
+*/
 #endif
