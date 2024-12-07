@@ -129,6 +129,50 @@ const uint8_t priv_exponent5[] PROGMEM = {
 0xbf, 0x0a, 0xf2, 0x39, 0x43, 0xd2, 0x01, 0x20, 0x9f, 0xb8, 0x8d, 0xcb, 0x1f, 0x01
 };
 
+/**********************************************************************************************
+   RSA KEY #4 (8Bytes)
+**********************************************************************************************/
+/* Primzahl 1 p (8 Bytes):14091828191315287507 */
+const uint8_t p4[] PROGMEM = {
+0xc3, 0x90, 0x3b, 0x14, 0x0b, 0x2e, 0xdd, 0xd3
+};
+
+/* Primzahl 2 q (8 Bytes): 6353019252147394247*/
+const uint8_t q4[] PROGMEM = {
+0x58, 0x2a, 0x75, 0x59, 0x9f, 0x76, 0x96, 0xc7
+};
+
+/* Exponent 1 dp: 5927267588107438781 */
+const uint8_t dp4[] PROGMEM = {
+0x52, 0x41, 0xe2, 0x77, 0xa5, 0xd4, 0x8a, 0xbd
+};
+
+/* Exponent 2 dq:2516023234043145363 */
+const uint8_t dq4[] PROGMEM = {
+0x22, 0xea, 0xb5, 0xcd, 0x07, 0xc5, 0x6c, 0x93
+};
+
+/* qinv: 907488296688955759*/
+const uint8_t qinv4[] PROGMEM = {
+0x0c, 0x98, 0x0b, 0xcc, 0x39, 0xf8, 0x31, 0x6f
+
+};
+
+/* modulus n:89525655797379415138998373505682772229 */
+const uint8_t modulus4[] PROGMEM = {
+0x43, 0x5a, 0x03, 0x9d, 0xf7, 0x17, 0xd1, 0x60, 0x71, 0x35, 0x7b, 0xdd, 0x73, 0xaa, 0x11, 0x05
+};
+
+/* pub exponent e: 65537 */
+const uint8_t pub_exponent4[] PROGMEM = {
+0x01, 0x00, 0x01
+};
+
+/* priv exponent d: 78459428511806828001727883835233122001*/
+const uint8_t priv_exponent4[] PROGMEM = {
+0x3b, 0x06, 0xbc, 0x7c, 0xc8, 0x7c, 0xdb, 0x45, 0xcd, 0xc8, 0x5c, 0x5a, 0x8f, 0xb5, 0xb6, 0xd1
+};
+
 
 /*
 // MWC random number implementation - https://en.wikipedia.org/wiki/Multiply-with-carry_pseudorandom_number_generator
@@ -227,10 +271,12 @@ const char MESSAGE[] =  "Hello World!";
 
 mbedtls_rsa_context rsa_ctx;
 
+/*
 //für add padding 
 unsigned char rsa_plaintext[PT_LEN];
 unsigned char rsa_decrypted[PT_LEN];
 unsigned char rsa_ciphertext[RSA_KEY_LEN];
+*/
 
 //debugging
 uint8_t debug_buffer[64]; //32=8*4, 64=8*8 ->ausgabe 4535373100000000 statt45353731XXXXXXXX
@@ -435,6 +481,8 @@ void load_key_from_flash(mbedtls_mpi *X, PGM_VOID_P os, size_t length) {
     
     //debug
     mbedtls_mpi_write_string( X, 16, debug_buffer, sizeof( debug_buffer ), &debug_buffer_len);
+    
+    
     simpleserial_put('r', (uint8_t) debug_buffer_len, debug_buffer ); // 00 bei 16 byte prim 
 
     
