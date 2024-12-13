@@ -48,11 +48,11 @@ int main(void)
     
     /* Load all the keys etc */
     //wird debug wird in ss_rsa_mbedtls nicht ausgegebn -> init in ss_rsa_mbedtls aufrufen 
-    //rsa_init();
+    rsa_init();
 
     
     //für ss-rsa-mebdtls, # bytes der schlüsselgröße anpassen
-    simpleserial_addcmd('t', 32,  real_dec);
+    simpleserial_addcmd('t', 4,  real_dec);
 
     
 
