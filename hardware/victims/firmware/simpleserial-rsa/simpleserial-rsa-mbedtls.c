@@ -86,6 +86,51 @@ const uint8_t priv_exponent2[] PROGMEM = {
 };
 */
 /**********************************************************************************************
+   RSA KEY #4 (8Bytes) ARM
+**********************************************************************************************/
+
+// Primzahl 1 p (8 Bytes):14 091 828 191 315 287 507 
+const uint8_t p8[] = {
+0xc3, 0x90, 0x3b, 0x14, 0x0b, 0x2e, 0xdd, 0xd3
+};
+
+// Primzahl 2 q (8 Bytes): 6 353 019 252 147 394 247
+const uint8_t q8[] = {
+0x58, 0x2a, 0x75, 0x59, 0x9f, 0x76, 0x96, 0xc7
+};
+
+// Exponent 1 dp: 5927267588107438781 
+const uint8_t dp8[] = {
+0x52, 0x41, 0xe2, 0x77, 0xa5, 0xd4, 0x8a, 0xbd
+};
+
+// Exponent 2 dq:2516023234043145363 
+const uint8_t dq8[] = {
+0x22, 0xea, 0xb5, 0xcd, 0x07, 0xc5, 0x6c, 0x93
+};
+
+// qinv: 907488296688955759
+const uint8_t qinv8[] = {
+0x0c, 0x98, 0x0b, 0xcc, 0x39, 0xf8, 0x31, 0x6f
+
+};
+
+// modulus n:89525655797379415138998373505682772229 
+const uint8_t modulus8[] = {
+0x43, 0x5a, 0x03, 0x9d, 0xf7, 0x17, 0xd1, 0x60, 0x71, 0x35, 0x7b, 0xdd, 0x73, 0xaa, 0x11, 0x05
+};
+
+// pub exponent e: 65537 
+const uint8_t pub_exponent8[] = {
+0x01, 0x00, 0x01
+};
+
+// priv exponent d: 78459428511806828001727883835233122001
+const uint8_t priv_exponent8[] = {
+0x3b, 0x06, 0xbc, 0x7c, 0xc8, 0x7c, 0xdb, 0x45, 0xcd, 0xc8, 0x5c, 0x5a, 0x8f, 0xb5, 0xb6, 0xd1
+};
+
+/**********************************************************************************************
    RSA KEY #4 (8Bytes)
 **********************************************************************************************/
 /*
@@ -129,7 +174,6 @@ const uint8_t pub_exponent8[] PROGMEM = {
 const uint8_t priv_exponent8[] PROGMEM = {
 0x3b, 0x06, 0xbc, 0x7c, 0xc8, 0x7c, 0xdb, 0x45, 0xcd, 0xc8, 0x5c, 0x5a, 0x8f, 0xb5, 0xb6, 0xd1
 };
-
 */
 /**********************************************************************************************
    RSA KEY #5 (16Bytes)
@@ -182,6 +226,7 @@ const uint8_t priv_exponent16[] PROGMEM = {
 /**********************************************************************************************
    RSA KEY #5 (16Bytes) ARM
 **********************************************************************************************/
+/*
 // Primzahl 1 p (16 Bytes): 267882443680857975761967467408531606417 
 const uint8_t p16[]  = {
 0xc9, 0x88, 0x48, 0x30, 0x3d, 0x06, 0x09, 0xbd, 0x39, 0x0b, 0xfe, 0xeb, 0xe5, 0xef, 0x4b, 0x91
@@ -223,13 +268,15 @@ const uint8_t priv_exponent16[]  = {
 0x40, 0x4d, 0xb6, 0xd3, 0x27, 0xf0, 0x6b, 0xa2, 0xea, 0xd5, 0x6a, 0x2e, 0x42, 0x72, 0x2c, 0xb0, 
 0x88, 0x1b, 0xbf, 0x0a, 0xf2, 0x39, 0x43, 0xd2, 0x01, 0x20, 0x9f, 0xb8, 0x8d, 0xcb, 0x1f, 0x01
 };
+*/
 
 /*
  * Example RSA-1024 keypair, for test purposes
  */
-#define RSA_KEY_LEN 32
+#define RSA_KEY_LEN 16
 //wenn 2, dann in simpleserial_mbedtls_rsa_private in MBEDTLS_MPI_CHK( mbedtls_mpi_read_binary( &T, input, ctx->len ) ); probleme
 //-> immer 2*bytes(p), also #bytes von N
+// 16 byte -> 32
 
 /*
 // für keylen 4
@@ -309,6 +356,7 @@ static int simpleserial_mbedtls_rsa_private( mbedtls_rsa_context *ctx,
      * T1 = input ^ dP mod P
      * T2 = input ^ dQ mod Q
      */
+
     /*
     //debug 
     mbedtls_mpi_write_string( &T, 16, debug_buffer, sizeof( debug_buffer ), &debug_buffer_len);
@@ -331,8 +379,8 @@ static int simpleserial_mbedtls_rsa_private( mbedtls_rsa_context *ctx,
     */
     
     //debug 
-    //mbedtls_mpi_write_string( &T1, 16, debug_buffer, sizeof( debug_buffer ), &debug_buffer_len);
-    //simpleserial_put('r', (uint8_t) debug_buffer_len, debug_buffer ); 
+    mbedtls_mpi_write_string( &T1, 16, debug_buffer, sizeof( debug_buffer ), &debug_buffer_len);
+    simpleserial_put('r', (uint8_t) debug_buffer_len, debug_buffer ); 
     //mbedtls_mpi_write_string( DP, 16, debug_buffer, sizeof( debug_buffer ), &debug_buffer_len);
     //simpleserial_put('r', (uint8_t) debug_buffer_len, debug_buffer );
     //mbedtls_mpi_write_string( &ctx->P, 16, debug_buffer, sizeof( debug_buffer ), &debug_buffer_len);
@@ -346,8 +394,8 @@ static int simpleserial_mbedtls_rsa_private( mbedtls_rsa_context *ctx,
     simpleserial_put('r', 8, temp2);
     */
     //debug
-    //mbedtls_mpi_write_string( &T2, 16, debug_buffer, sizeof( debug_buffer ), &debug_buffer_len);
-    //simpleserial_put('r', (uint8_t) debug_buffer_len, debug_buffer );
+    mbedtls_mpi_write_string( &T2, 16, debug_buffer, sizeof( debug_buffer ), &debug_buffer_len);
+    simpleserial_put('r', (uint8_t) debug_buffer_len, debug_buffer );
     //mbedtls_mpi_write_string( DQ, 16, debug_buffer, sizeof( debug_buffer ), &debug_buffer_len);
     //simpleserial_put('r', (uint8_t) debug_buffer_len, debug_buffer );
     //mbedtls_mpi_write_string( &ctx->Q, 16, debug_buffer, sizeof( debug_buffer ), &debug_buffer_len);
@@ -362,6 +410,27 @@ static int simpleserial_mbedtls_rsa_private( mbedtls_rsa_context *ctx,
     /*
      * T = (T1 - T2) * (Q^-1 mod P) mod P
      */
+
+    /*
+    //cmp aufrufen 
+    uint8_t bool = (&T1)->s * (&T2)->s > 0;
+    itoa(bool, temp2, 10);
+    simpleserial_put('r', 2, temp2); 
+    //54: 1
+    */ //liefert immer 1
+
+    //trigger_high();
+    uint8_t bool = mbedtls_mpi_cmp_abs( &T1, &T2 ) >= 0;
+    itoa(bool, temp2, 10);
+    simpleserial_put('r', 2, temp2);
+    //54: 1
+
+        /**
+    trigger_high();
+    MBEDTLS_MPI_CHK( mbedtls_mpi_sub_abs( &T, &T1, &T2 ) ); // subtraktion liefert immer ein positives ergebnos 
+    (&T)->s =  (&T1)->s;
+        **/
+    
     trigger_high();
     MBEDTLS_MPI_CHK( mbedtls_mpi_sub_mpi( &T, &T1, &T2 ) );
     trigger_low();
@@ -524,7 +593,7 @@ void rsa_init(void)
     mbedtls_mpi_read_string( &rsa_ctx.QP, 16, RSA_QP ) ;
     */
     
-
+    /*
     //from binary: mbedtls_mpi *X, const unsigned char *buf, size_t buflen
     mbedtls_mpi_read_binary( &rsa_ctx.N, modulus16, sizeof(modulus16));
     mbedtls_mpi_read_binary( &rsa_ctx.E, pub_exponent16, sizeof(pub_exponent16));
@@ -534,6 +603,17 @@ void rsa_init(void)
     mbedtls_mpi_read_binary( &rsa_ctx.DP, dp16, sizeof(dp16));
     mbedtls_mpi_read_binary( &rsa_ctx.DQ, dq16, sizeof(dq16));
     mbedtls_mpi_read_binary( &rsa_ctx.QP, qinv16, sizeof(qinv16));
+    */
+
+    //from binary: mbedtls_mpi *X, const unsigned char *buf, size_t buflen
+    mbedtls_mpi_read_binary( &rsa_ctx.N, modulus8, sizeof(modulus8));
+    mbedtls_mpi_read_binary( &rsa_ctx.E, pub_exponent8, sizeof(pub_exponent8));
+    mbedtls_mpi_read_binary( &rsa_ctx.D, priv_exponent8, sizeof(priv_exponent8));
+    mbedtls_mpi_read_binary( &rsa_ctx.P, p8, sizeof(p8));
+    mbedtls_mpi_read_binary( &rsa_ctx.Q, q8, sizeof(q8));
+    mbedtls_mpi_read_binary( &rsa_ctx.DP, dp8, sizeof(dp8));
+    mbedtls_mpi_read_binary( &rsa_ctx.DQ, dq8, sizeof(dq8));
+    mbedtls_mpi_read_binary( &rsa_ctx.QP, qinv8, sizeof(qinv8));
     
     /*
     mbedtls_mpi_write_string( &rsa_ctx.N, 16, debug_buffer, sizeof( debug_buffer ), &debug_buffer_len);
@@ -563,7 +643,7 @@ void rsa_init(void)
 
 
 uint8_t buf[128];
-uint8_t hash[32];
+uint8_t hash[16]; // zu key size angeben 
     
 #if SS_VER == SS_VER_2_1
 uint8_t real_dec(uint8_t cmd, uint8_t scmd, uint8_t len, uint8_t *pt) //input wird ignoriert ? 

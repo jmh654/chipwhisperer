@@ -122,7 +122,7 @@ int mbedtls_mpi_grow( mbedtls_mpi *X, size_t nblimbs )
     if( X->n < nblimbs )
     {
         if( ( p = (mbedtls_mpi_uint*)mbedtls_calloc( nblimbs, ciL ) ) == NULL )
-            //printf("calloc failed in mpi_gpow");
+            //mbedtls_printf(" mpi_gpow ");
             return( MBEDTLS_ERR_MPI_ALLOC_FAILED );
 
         if( X->p != NULL )
