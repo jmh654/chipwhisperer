@@ -639,9 +639,10 @@ uint8_t get_pt(uint8_t * pt, uint8_t len)
 void rsa_init(void)
 {
     pre_alloc_key_crt();
+    load_key(0);         //use og key
     //load_key(2);       // use 2 Byte prim data
     //load_key(4);         // use 8 byte prim data 
-    load_key(3);          // use 32 Byte prim data
+    //load_key(3);          // use 32 Byte prim data
     //load_key(5);           // use 16 Byte prim data
 }    
 
