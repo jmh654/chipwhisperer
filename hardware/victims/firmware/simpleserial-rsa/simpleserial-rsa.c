@@ -29,7 +29,7 @@
 void rsa_init(void);
 uint8_t real_dec(uint8_t * pt, uint8_t len);
 //uint8_t my_real_dec(uint8_t * pt, uint8_t len);
-uint8_t get_pt(uint8_t * pt, uint8_t len);
+//uint8_t get_pt(uint8_t * pt, uint8_t len);
 
 #if defined(__arm__) || defined(__riscv__) || defined(__riscv)
 
@@ -52,7 +52,7 @@ int main(void)
 
     
     //für ss-rsa-mebdtls, # bytes der schlüsselgröße anpassen
-    simpleserial_addcmd('t', 16,  real_dec);
+    simpleserial_addcmd('t', 64,  real_dec);
 
     
 
@@ -71,7 +71,11 @@ int main(void)
 
     //Perform encryption -  must set key via plaintext
     //simpleserial_addcmd('p', 64, get_pt);
-    simpleserial_addcmd('p', 16, get_pt);
+    
+    
+    //simpleserial_addcmd('p', 16, get_pt);
+
+    
     //simpleserial_addcmd('k', 16, set_key);
     while(1)
         simpleserial_get();
